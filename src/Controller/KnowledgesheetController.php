@@ -23,27 +23,28 @@ class KnowledgesheetController extends AbstractController
 
         return $this->render('knowledgesheet/index.html.twig', [
             'knowledgesheet' => $knowledgesheet,
-            ]);
+        ]);
     }
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
      */
     public function create(EntityManagerInterface $entityManager)
     {
-    $knowledge = new Knowledgesheet();
-    $knowledge->setTitle("Hello");
-    $knowledge->setContent("Essai",TextareaType::class);
-    $entityManager->persist($knowledge);
-    $entityManager->flush();
-    return $this->redirectToRoute('knowledgesheet');
+        $knowledge = new Knowledgesheet();
+        $knowledge->setTitle("Hello");
+        $knowledge->setContent("Essai",TextareaType::class);
+        $entityManager->persist($knowledge);
+        $entityManager->flush();
+        return $this->redirectToRoute('knowledgesheet');
     }
 
     /**
-     * @Route("/knowledgesheet/{id}", name="knowledgesheet_get")
+     * @Route("/knowledgesheet/{id}/delete", name="delete")
      */
-    public function getKnowledgesheet(Knowledgesheet $knowledgesheet)
+    public function delete(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager)
     {
-
+        $entityManager->remove($knowledgesheet);
+        $entityManager->flush();
         return $this->redirectToRoute('knowledgesheet');
     }
 
