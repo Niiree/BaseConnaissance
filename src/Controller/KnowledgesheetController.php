@@ -8,6 +8,8 @@ use App\Repository\KnowledgesheetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Type;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,14 +30,25 @@ class KnowledgesheetController extends AbstractController
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
      */
-    public function create(EntityManagerInterface $entityManager)
+    public function create(EntityManagerInterface $entityManager, Request $request)
     {
         $knowledge = new Knowledgesheet();
-        $knowledge->setTitle("Hello");
-        $knowledge->setContent("Essai",TextareaType::class);
-        $entityManager->persist($knowledge);
-        $entityManager->flush();
-        return $this->redirectToRoute('knowledgesheet');
+
+        $form=$this->createForm(KnowledgesheetType::class,$knowledge);
+        $form->add('edit',SubmitType::class,
+            ['label'=>'Contribuer']);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form-> isValid()) {
+            $knowledge = $form->getData();
+            $entityManager->persist($knowledge);
+            $entityManager->flush();
+            return $this->redirectToRoute('knowledgesheet');
+        }
+
+        return $this ->render('knowledgesheet/create.html.twig',[
+            'formKnowledgesheet' => $form->createView(),
+        ]);
     }
 
     /**
