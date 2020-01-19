@@ -11,16 +11,11 @@
 <div class="example-wrapper">
     <h1>Fiche de connaissance ✅</h1>
 
-    This friendly message is coming from:
-
+   <ul>
     {% for knowledgesheet in knowledgesheet %}
-        {{ knowledgesheet.id }}
-        {{ knowledgesheet.title }}
+       <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }}</li>
         {{ knowledgesheet.content }}
     {% endfor %}
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/superadmin/Bureau/Symfony/BaseConnaissance/src/Controller/KnowledgesheetController.php'|file_link(0) }}">src/Controller/KnowledgesheetController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/superadmin/Bureau/Symfony/BaseConnaissance/templates/knowledgesheet/index.html.twig'|file_link(0) }}">templates/knowledgesheet/index.html.twig</a></code></li>
-    </ul>
+   </ul>
 </div>
 {% endblock %}
