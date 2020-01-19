@@ -19,9 +19,11 @@ class KnowledgesheetController extends AbstractController
      */
     public function index(KnowledgesheetRepository $knowledgesheetRepository)
     {
+        $knowledgesheet = $knowledgesheetRepository->findAll();
+
         return $this->render('knowledgesheet/index.html.twig', [
-            'controller_name' => 'KnowledgesheetController',
-        ]);
+            'knowledgesheet' => $knowledgesheet,
+            ]);
     }
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
@@ -35,4 +37,15 @@ class KnowledgesheetController extends AbstractController
     $entityManager->flush();
     return $this->redirectToRoute('knowledgesheet');
     }
+
+    /**
+     * @Route("/knowledgesheet/{id}", name="knowledgesheet_get")
+     */
+    public function getKnowledgesheet(Knowledgesheet $knowledgesheet)
+    {
+
+        return $this->redirectToRoute('knowledgesheet');
+    }
+
+
 }
