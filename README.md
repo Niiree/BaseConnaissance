@@ -1,6 +1,8 @@
 # BaseConnaissance
-##Installation du projet
-##Règles
+## Initialisation du projet
+1) Effectuer la commande `git clone ` pour récuperer l'intégralité du projet depuis Github vers votre poste.
+2) Sur le terminal et dans le dossier du projet, executer la commande `composer install` 
+## Règles
 ### Nos branches
 
 `Master` = Branche source du projet  (Ne pas push dessus).
