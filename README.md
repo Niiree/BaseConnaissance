@@ -1,12 +1,13 @@
 # BaseConnaissance
+##Installation du projet
+##Règles
+### Nos branches
 
-## Nos branches
+`Master` = Branche source du projet  (Ne pas push dessus).
 
-Master = Branche source du projet  (Ne pas push dessus).
+`Dev` = Branche final de developpement (uniquement dédié au merge)
 
-Dev = Branche final de developpement (uniquement dédié au merge)
-
-Dev-{fonctionnalité}-{Prénom} = Branche de développement personnel.
+`Dev-{fonctionnalité}-{Prénom}` = Branche de développement personnel.
 
 
 ## Branche Master
