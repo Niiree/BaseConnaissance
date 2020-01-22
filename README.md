@@ -1,7 +1,7 @@
 # BaseConnaissance
 ## Initialisation du projet
 1) Effectuer la commande `git clone ` pour récuperer l'intégralité du projet depuis Github vers votre poste.
-2) Sur le terminal et dans le dossier du projet, executer la commande `composer install` 
+2) Sur le terminal et dans le dossier du projet, executer la commande `composer install` pour installer les dépendances du projet (composer.json)
 ## Règles
 ### Nos branches
 
