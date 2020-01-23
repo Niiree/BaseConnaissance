@@ -3,7 +3,7 @@
 1) Effectuer la commande `git clone ` pour récuperer l'intégralité du projet depuis Github vers votre poste.
 2) Sur le terminal et dans le dossier du projet, executer la commande `composer install` pour installer les dépendances du projet (composer.json)
 3) Copier le fichier `.env` vers la racine du projet et le renommer en `.en.local`. Le fichier en question sert de configuration entre le projet et votre base de donnée.
-4) Modifier la ligne  
+4) Modifier la ligne `DATABASE_URL=postgresql://{nom}:{motdepasse@{adresse de la bdd}/{nomdelabasededonnée}?serverVersion={versionDuServeur}&charset=utf8`  
 ## Règles
 ### Nos branches
 
