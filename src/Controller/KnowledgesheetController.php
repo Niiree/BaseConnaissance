@@ -62,4 +62,28 @@ class KnowledgesheetController extends AbstractController
     }
 
 
+    /**
+     * @Route("/knowledgesheet/{id}/edit", name="edit")
+     */
+    public function edit(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager, request $request)
+    {
+        $form=$this->createForm(KnowledgesheetType::class,$knowledgesheet);
+        $form->add('edit',SubmitType::class,
+            ['label'=>'Enregistrer']);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form-> isValid()){
+            $knowledgesheet = $form->getData();
+            $entityManager->persist($knowledgesheet);
+            $entityManager->flush();
+            return $this->redirectToRoute('knowledgesheet');
+
+        }
+
+        return $this ->render('knowledgesheet/edit.html.twig',[
+            'formKnowledgesheet' => $form->createView(),
+        ]);
+
+    }
+
 }
