@@ -14,7 +14,10 @@
 
    <ul>
     {% for knowledgesheet in knowledgesheet %}
-       <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }} <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Delete</a> </li>
+       <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }}
+           <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
+           <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Delete</a>
+       </li>
         {{ knowledgesheet.content }}
     {% endfor %}
    </ul>
