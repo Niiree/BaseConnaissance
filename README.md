@@ -16,7 +16,9 @@ composer install
 ```
  
 3 -  Copier le fichier `.env` vers la racine du projet et le renommer en `.en.local`. Le fichier en question servira de configuration entre le projet et votre base de donnée.
+
 4 -  Modifier la ligne `DATABASE_URL=postgresql://{nom}:{motdepasse@{adresse de la bdd}/{nomdelabasededonnée}?serverVersion={versionDuServeur}&charset=utf8`  
+
 5 - Le projet est prêt à être utilisé sur symfony
 
 ## Règle 
