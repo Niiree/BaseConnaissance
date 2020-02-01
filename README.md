@@ -38,7 +38,7 @@ La branche `Master` du projet initial. Le but sera d'avoir des versions (?tags?)
 La branche `Dev` est dédiée aux merges de nos différentes branches personnelles. Le but de la branche est de tester le projet et de le rendre stable avant de le pousser vers le master.
 
 
-####Branche personnelle
+#### Branche personnelle
 `Dev-{fonctionnalité}-{Prénom}`
 Branche perso du projet. Vous êtes libres de faire ce que vous voulez dessus. C'est cette branche qui sera merge vers `dev`
 
@@ -61,12 +61,12 @@ Les conflits sur le master et sur le dev seront à regler en groupe.
 
 
 ## Ne pas oublier 
-###Mettre à jour son projet
+### Mettre à jour son projet
 ```
 git pull
 ```
 
-###Changement de branche
+### Changement de branche
 ```
 git checkout {nom-de-la-branche}
 ```
