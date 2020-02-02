@@ -3,7 +3,7 @@
 {% block title %}Users{% endblock %}
 
 {% block body %}
-    <h1>Users</h1>
+    <h1>Utilisateurs</h1>
 
     <table class="table">
         <tbody>
@@ -12,7 +12,7 @@
                 <td>{{ user.id }}</td>
             </tr>
             <tr>
-                <th>Username</th>
+                <th>Pseudo</th>
                 <td>{{ user.username }}</td>
             </tr>
             <tr>
@@ -20,15 +20,15 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
             </tr>
             <tr>
-                <th>Password</th>
+                <th>Mot de passe</th>
                 <td>{{ user.password }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('users_index') }}">back to list</a>
+    <a href="{{ path('users_index') }}">Revenir à la liste</a>
 
-    <a href="{{ path('users_edit', {'id': user.id}) }}">edit</a>
+    <a href="{{ path('users_edit', {'id': user.id}) }}">editer</a>
 
     {{ include('users/_delete_form.html.twig') }}
 {% endblock %}
