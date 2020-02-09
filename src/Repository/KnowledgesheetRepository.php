@@ -20,10 +20,11 @@ class KnowledgesheetRepository extends ServiceEntityRepository
         parent::__construct($registry, Knowledgesheet::class);
     }
 
-    public function searchfultexte()
+    public function searchfultexte($search)
     {
          $builder = $this->_em->createQueryBuilder() //build la requeteQuery avec la source et le select
              ->select('id')
+             ->where("id = $search") // Condition de notre recherche
          ->from($this->_entityName,'id');
          $query = $builder ->getQuery(); //Récuperation de la query dans $query
          $result = $query ->getResult(); //Récupération du résultat pour le retourner
