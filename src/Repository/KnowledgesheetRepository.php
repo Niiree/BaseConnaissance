@@ -26,9 +26,8 @@ class KnowledgesheetRepository extends ServiceEntityRepository
             SELECT "ProjetBaseDeConnaissance".public.knowledgesheet.content
             FROM "ProjetBaseDeConnaissance".public.knowledgesheet
             WHERE to_tsvector(\'french\', content) @@ to_tsquery(\'french\', \'abandonner\')
-    ')
-             ->getResult();
-        return var_dump($query);
+    ');
+        return $query;
     }
     // /**
     //  * @return Knowledgesheet[] Returns an array of Knowledgesheet objects
