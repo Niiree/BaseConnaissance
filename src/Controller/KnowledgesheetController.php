@@ -28,19 +28,18 @@ class KnowledgesheetController extends AbstractController
             'knowledgesheet' => $knowledgesheet,
         ]);
     }
+
     /**
      * @Route("/knowledgesheet/search", name="search")
      */
     public function search()
     {
-
-        $form = $this->createForm(SearchType::class);
+        $form = $this->createForm(SearchType::class); // Création de la barre de recherche vers la vue /search
         $form->add('patate',SubmitType::class,
-            ['label'=>'Search']);
-        return $this ->render('knowledgesheet/search.html.twig',[
+            ['label'=>'Rechercher']);
+        return $this ->render('knowledgesheet/searchKnow.html.twig',[
             'formSearch' => $form->createView(),
         ]);
-
     }
 
     /**
@@ -61,7 +60,6 @@ class KnowledgesheetController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('knowledgesheet');
         }
-
         return $this ->render('knowledgesheet/create.html.twig',[
             'formKnowledgesheet' => $form->createView(),
         ]);
