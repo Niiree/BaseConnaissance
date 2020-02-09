@@ -22,11 +22,11 @@ class KnowledgesheetRepository extends ServiceEntityRepository
 
     public function searchfultexte()
     {
-         $builder = $this->_em->createQueryBuilder()
+         $builder = $this->_em->createQueryBuilder() /*build la requeteQuery avec la source et le select */
              ->select('id')
          ->from($this->_entityName,'id');
-         $query = $builder ->getQuery();
-         $result = $query ->getResult();
+         $query = $builder ->getQuery(); /*Récuperation de la query dans $query*/
+         $result = $query ->getResult(); /*On récupere le résultat pour le retourner*/
         return $result;
     }
     // /**
