@@ -21,7 +21,7 @@ class KnowledgesheetController extends AbstractController
      */
     public function index(KnowledgesheetRepository $knowledgesheetRepository)
     {
-        $knowledgesheet = $knowledgesheetRepository->searchfultexte("1");
+        $knowledgesheet = $knowledgesheetRepository->searchfultexte("2");
 
         return $this->render('knowledgesheet/index.html.twig', [
             'knowledgesheet' => $knowledgesheet,

@@ -30,6 +30,9 @@ class KnowledgesheetRepository extends ServiceEntityRepository
          $result = $query ->getResult(); //Récupération du résultat pour le retourner
         return $result;
     }
+
+
+    //
     // /**
     //  * @return Knowledgesheet[] Returns an array of Knowledgesheet objects
     //  */
