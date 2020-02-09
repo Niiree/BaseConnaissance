@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+
 use App\Entity\Knowledgesheet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -19,6 +20,16 @@ class KnowledgesheetRepository extends ServiceEntityRepository
         parent::__construct($registry, Knowledgesheet::class);
     }
 
+    public function searchfultexte()
+    {
+        $query = $this->getEntityManager()->createQuery('
+            SELECT "ProjetBaseDeConnaissance".public.knowledgesheet.content
+            FROM "ProjetBaseDeConnaissance".public.knowledgesheet
+            WHERE to_tsvector(\'french\', content) @@ to_tsquery(\'french\', \'abandonner\')
+    ')
+             ->getResult();
+        return var_dump($query);
+    }
     // /**
     //  * @return Knowledgesheet[] Returns an array of Knowledgesheet objects
     //  */

@@ -13,6 +13,8 @@
     <a href="{{ path('knowledgesheet_create') }}">Contribuer</a>
 
    <ul>
+
+
     {% for knowledgesheet in knowledgesheet %}
        <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }}
            <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
