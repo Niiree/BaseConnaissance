@@ -22,12 +22,12 @@ class KnowledgesheetRepository extends ServiceEntityRepository
 
     public function searchfultexte()
     {
-        $query = $this->getEntityManager()->createQuery('
-            SELECT "ProjetBaseDeConnaissance".public.knowledgesheet.content
-            FROM "ProjetBaseDeConnaissance".public.knowledgesheet
-            WHERE to_tsvector(\'french\', content) @@ to_tsquery(\'french\', \'abandonner\')
-    ');
-        return $query;
+         $builder = $this->_em->createQueryBuilder()
+             ->select('id')
+         ->from($this->_entityName,'id');
+         $query = $builder ->getQuery();
+         $result = $query ->getResult();
+        return $result;
     }
     // /**
     //  * @return Knowledgesheet[] Returns an array of Knowledgesheet objects
