@@ -15,7 +15,7 @@
    <ul>
        {{dump(knowledgesheet)}}
 
-    {% for knowledgesheet in knowledgesheet %}
+       {% for knowledgesheet in knowledgesheet %}
        <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }}
            <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
            <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Delete</a>
