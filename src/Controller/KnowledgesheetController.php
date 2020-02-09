@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
+use App\Form\SearchType;
 use App\Repository\KnowledgesheetRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Type;
@@ -27,6 +28,21 @@ class KnowledgesheetController extends AbstractController
             'knowledgesheet' => $knowledgesheet,
         ]);
     }
+    /**
+     * @Route("/knowledgesheet/search", name="search")
+     */
+    public function search()
+    {
+
+        $form = $this->createForm(SearchType::class);
+        $form->add('patate',SubmitType::class,
+            ['label'=>'Search']);
+        return $this ->render('knowledgesheet/search.html.twig',[
+            'formSearch' => $form->createView(),
+        ]);
+
+    }
+
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
      */
