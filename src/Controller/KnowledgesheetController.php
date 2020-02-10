@@ -86,4 +86,21 @@ class KnowledgesheetController extends AbstractController
 
     }
 
+    /**
+     * @Route("/admin", name="admin")
+     */
+    public function admin()
+    {
+
+        return $this->render('admin.html.twig');
+    }
+     /**
+     * @Route("/navbar", name="navbar")
+     */
+    public function navbar()
+    {
+
+        return $this->render('navbar.html.twig');
+    }
+
 }
