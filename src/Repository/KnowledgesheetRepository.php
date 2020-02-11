@@ -24,8 +24,9 @@ class KnowledgesheetRepository extends ServiceEntityRepository
     {
          $builder = $this->_em->createQueryBuilder() //build la requeteQuery avec la source et le select
              ->select('id')
-             ->where("id = $search") // Condition de notre recherche
-         ->from($this->_entityName,'id');
+             ->from($this->_entityName,'id')
+             ->where("id = $search"); // Condition de notre recherche
+
          $query = $builder ->getQuery(); //Récuperation de la query dans $query
          $result = $query ->getResult(); //Récupération du résultat pour le retourner
         return $result;

@@ -20,28 +20,44 @@ class KnowledgesheetController extends AbstractController
     /**
      * @Route("/knowledgesheet", name="knowledgesheet")
      */
-    public function index(KnowledgesheetRepository $knowledgesheetRepository)
+    public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
-        $knowledgesheet = $knowledgesheetRepository->searchfultexte("5");
+        $form = $this->createForm(SearchType::class); // Création de la barre de recherche vers la vue /search
+        $form->add('patate',SubmitType::class,
+            ['label'=>'Rechercher']);
+        if ($request->isMethod('POST')){
+        if($form->isSubmitted()){
+            $test = $form->getData();
+            $form ->submit($test);
 
+        }
+        else{
+            $test = "6";
+        }}
+
+        $knowledgesheet = $knowledgesheetRepository->searchfultexte($test);
         return $this->render('knowledgesheet/index.html.twig', [
             'knowledgesheet' => $knowledgesheet,
+            'knowledgesheet/searchKnow.html.twig',
+                'formSearch' => $form->createView()
         ]);
     }
 
     /**
      * @Route("/knowledgesheet/search", name="search")
      */
-    public function search()
+ /*   public function search()
     {
         $form = $this->createForm(SearchType::class); // Création de la barre de recherche vers la vue /search
         $form->add('patate',SubmitType::class,
             ['label'=>'Rechercher']);
+
+
         return $this ->render('knowledgesheet/searchKnow.html.twig',[
             'formSearch' => $form->createView(),
         ]);
     }
-
+*/
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
      */
