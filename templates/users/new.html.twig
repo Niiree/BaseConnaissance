@@ -3,6 +3,8 @@
 {% block title %}New Users{% endblock %}
 
 {% block body %}
+{%include 'navbar.html.twig'%}
+
 <div class="container">
     <h1>Créer un nouvel utilisateur</h1>
     {{ include('users/_form.html.twig') }}
