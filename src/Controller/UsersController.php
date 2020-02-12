@@ -60,8 +60,14 @@ class UsersController extends AbstractController
     /**
      * @Route("/{id}", name="users_show", methods={"GET"})
      */
-    public function show(Users $user): Response
+    public function show(Users $user, UserPasswordEncoderInterface $encoder): Response
     {
+        $user->setPassword(
+            $encoder->encodePassword(
+                $user,
+                $user->getPassword()
+            )
+        );
         return $this->render('users/show.html.twig', [
             'user' => $user,
         ]);
