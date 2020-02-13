@@ -6,6 +6,7 @@ use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
 use App\Form\SearchFullTextType;
 use App\Repository\KnowledgesheetRepository;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
 use http\Client\Curl\User;
 use phpDocumentor\Reflection\Type;
@@ -25,7 +26,7 @@ class KnowledgesheetController extends AbstractController
     public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
         $form = $this->createFormBuilder()
-            ->add('search_bar')
+            ->add('search_bar',\Symfony\Component\Form\Extension\Core\Type\TextType::class,['label'=> false])
             ->add('Rechercher', SubmitType::class)
             ->getForm();
         $knowledgesheet = null;
