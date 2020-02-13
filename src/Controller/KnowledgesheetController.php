@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
-use App\Form\SearchType;
+use App\Form\SearchFullTextType;
 use App\Repository\KnowledgesheetRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Client\Curl\User;
 use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,20 +24,22 @@ class KnowledgesheetController extends AbstractController
      */
     public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
-        $form = $this->createForm(SearchType::class); // Création de la barre de recherche vers la vue /search
-        $form->add('patate',SubmitType::class,
-            ['label'=>'Rechercher']);
-        if ($request->isMethod('POST')){
-        if($form->isSubmitted()){
-            $test = $form->getData();
-            $form ->submit($test);
-
+        $form = $this->createFormBuilder()
+            ->add('search_bar')
+            ->add('Rechercher', SubmitType::class)
+            ->getForm();
+        $knowledgesheet = null;
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            var_dump($data);
+            $knowledgesheet = $knowledgesheetRepository->searchfultexte($data['search_bar']);
         }
         else{
-            $test = "6";
-        }}
+            $data['search'] = '1';
+        }
 
-        $knowledgesheet = $knowledgesheetRepository->searchfultexte($test);
+
         return $this->render('knowledgesheet/index.html.twig', [
             'knowledgesheet' => $knowledgesheet,
             'knowledgesheet/searchKnow.html.twig',
@@ -43,21 +47,6 @@ class KnowledgesheetController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/knowledgesheet/search", name="search")
-     */
- /*   public function search()
-    {
-        $form = $this->createForm(SearchType::class); // Création de la barre de recherche vers la vue /search
-        $form->add('patate',SubmitType::class,
-            ['label'=>'Rechercher']);
-
-
-        return $this ->render('knowledgesheet/searchKnow.html.twig',[
-            'formSearch' => $form->createView(),
-        ]);
-    }
-*/
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
      */

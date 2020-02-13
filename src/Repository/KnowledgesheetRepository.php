@@ -22,7 +22,17 @@ class KnowledgesheetRepository extends ServiceEntityRepository
 
     public function searchfultexte($search)
     {
-         $builder = $this->_em->createQueryBuilder() //build la requeteQuery avec la source et le select
+
+/*
+        $em = $this->getEntityManager();
+        $builder = $em -> createQuery("
+        SELECT c 
+        FROM App\Entity\Knowledgesheet 
+        WHERE c.id > :id")
+        -> setParameter('id',$search);
+
+        return $builder->getResult();*/
+         $builder = $this->_em->createQueryBuilder() //build la reateQuery('')requeteQuery avec la source et le select
              ->select('id')
              ->from($this->_entityName,'id')
              ->where("id = $search"); // Condition de notre recherche
