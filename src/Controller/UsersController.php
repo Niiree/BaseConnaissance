@@ -29,6 +29,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/new", name="users_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
@@ -60,6 +61,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/{id}", name="users_show", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function show(Users $user, UserPasswordEncoderInterface $encoder): Response
     {
