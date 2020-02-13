@@ -39,8 +39,11 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.username }}</td>
                 <td>{{ user.email }}</td>
+                {% if app.user.id != user.id  %}
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                {% endif %}
              {# <td>{{ user.password }}</td> #}
+
                 <td>
                     <a href="{{ path('users_show', {'id': user.id}) }}">Voir</a>
                     <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
