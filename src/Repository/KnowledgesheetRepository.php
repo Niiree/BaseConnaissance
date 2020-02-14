@@ -6,7 +6,8 @@ namespace App\Repository;
 use App\Entity\Knowledgesheet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 /**
  * @method Knowledgesheet|null find($id, $lockMode = null, $lockVersion = null)
  * @method Knowledgesheet|null findOneBy(array $criteria, array $orderBy = null)
@@ -22,24 +23,20 @@ class KnowledgesheetRepository extends ServiceEntityRepository
 
     public function searchfultexte($search)
     {
+// Requete de recherche full texte
+        $rsm = new ResultSetMappingBuilder($this->getEntityManager());
+        $rsm->addRootEntityFromClassMetadata('App\\Entity\\Knowledgesheet', "p");
+        $sql = <<<SQL
+         SELECT id, content, title
+         FROM knowledgesheet 
+         WHERE to_tsvector('french', content) @@ to_tsquery('french', :search)
+SQL;
+        $query = $this->_em->createNativeQuery($sql,$rsm);
+        $query->setParameter('search', $search);
+        return $result = $query->getResult();
 
-/*
-        $em = $this->getEntityManager();
-        $builder = $em -> createQuery("
-        SELECT c 
-        FROM App\Entity\Knowledgesheet 
-        WHERE c.id > :id")
-        -> setParameter('id',$search);
 
-        return $builder->getResult();*/
-         $builder = $this->_em->createQueryBuilder() //build la reateQuery('')requeteQuery avec la source et le select
-             ->select('id')
-             ->from($this->_entityName,'id')
-             ->where("id = $search"); // Condition de notre recherche
 
-         $query = $builder ->getQuery(); //Récuperation de la query dans $query
-         $result = $query ->getResult(); //Récupération du résultat pour le retourner
-        return $result;
     }
 
 
