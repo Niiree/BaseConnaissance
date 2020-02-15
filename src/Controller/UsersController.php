@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 /**
  * @Route("/users")
  */
@@ -18,6 +18,7 @@ class UsersController extends AbstractController
 {
     /**
      * @Route("/", name="users_index", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(UsersRepository $usersRepository): Response
     {
@@ -28,6 +29,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/new", name="users_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
@@ -59,6 +61,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/{id}", name="users_show", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function show(Users $user, UserPasswordEncoderInterface $encoder): Response
     {
@@ -78,7 +81,7 @@ class UsersController extends AbstractController
      */
     public function edit(Request $request, Users $user): Response
     {
-        $form = $this->createForm(UsersType::class, $user);
+        $form = $this->createForm(UsersType::class, $user, ['is_admin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
