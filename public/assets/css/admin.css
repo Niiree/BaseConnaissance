@@ -1,0 +1,34 @@
+*{
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.navbar-brand img{
+    width: 170px;
+
+}
+.content{
+    margin-top: 1px;
+}
+
+/* side bar style  */
+.content #one{
+    height: 100vh;  
+}
+.content #one #sidebar-wrapper {
+    min-height: 88vh;
+}
+  
+.content #one #sidebar-wrapper .sidebar-heading {
+    padding: 0.875rem 1.25rem;
+    font-size: 1.2rem;
+} 
+.content #one #sidebar-wrapper .list-group {
+    width: 15rem;
+    min-height: 88vh;
+} 
+ /* end of the sidebar style  */
+
+ /* main content style  */
+.content #tow{
+    background-color: rgb(233, 231, 231); 
+}
