@@ -14,7 +14,11 @@
     <a href="{{ path('knowledgesheet_create') }}">Contribuer</a>
 
    <ul>
-    {% for knowledgesheet in knowledgesheet %}
+
+           {{ form(formSearch)}} {# vue création #}
+       {# VAR DUMP
+{{ render(controller('App\\Controller\\KnowledgesheetController:search')) }}  #}{#Include de la barre de recherche#}
+       {% for knowledgesheet in knowledgesheet %}
        <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }}
            <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
            <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Delete</a>

@@ -4,9 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
+use App\Form\SearchFullTextType;
 use App\Repository\KnowledgesheetRepository;
+use Doctrine\DBAL\Types\TextType;
 use Doctrine\ORM\EntityManagerInterface;
+use http\Client\Curl\User;
 use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\String_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +23,31 @@ class KnowledgesheetController extends AbstractController
     /**
      * @Route("/knowledgesheet", name="knowledgesheet")
      */
-    public function index(KnowledgesheetRepository $knowledgesheetRepository)
+    public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
-        $knowledgesheet = $knowledgesheetRepository->findAll();
+        $form = $this->createFormBuilder()
+            ->add('search_bar',\Symfony\Component\Form\Extension\Core\Type\TextType::class,['label'=> false])
+            ->add('Rechercher', SubmitType::class)
+            ->getForm();
+        $knowledgesheet = null;
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            var_dump($data);
+            $knowledgesheet = $knowledgesheetRepository->searchfultexte($data['search_bar']);
+        }
+        else{
+            $data['search'] = '1';
+        }
+
 
         return $this->render('knowledgesheet/index.html.twig', [
             'knowledgesheet' => $knowledgesheet,
+            'knowledgesheet/searchKnow.html.twig',
+                'formSearch' => $form->createView()
         ]);
     }
+
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
      */
@@ -45,7 +66,6 @@ class KnowledgesheetController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('knowledgesheet');
         }
-
         return $this ->render('knowledgesheet/create.html.twig',[
             'formKnowledgesheet' => $form->createView(),
         ]);
@@ -86,6 +106,7 @@ class KnowledgesheetController extends AbstractController
 
     }
 
+
     /**
      * @Route("/admin", name="admin")
      */
@@ -102,5 +123,6 @@ class KnowledgesheetController extends AbstractController
 
         return $this->render('navbar.html.twig');
     }
+
 
 }
