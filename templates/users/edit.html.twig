@@ -3,26 +3,26 @@
 {% block title %}Edit Users{% endblock %}
 
 {% block body %}
-{% include 'navbar.html.twig'%}
+    {% include 'navbar.html.twig'%}
 
-<div class="container">
+    <div class="container">
 
-    {% if app.user.id != user.id  %}
-        <h1>Modification des utilisateurs</h1>
-    {% else %}
-        <h1>Mon compte</h1>
-    {% endif %}
+        {% if app.user.id != user.id  %}
+            <h1>Modification des utilisateurs</h1>
+        {% else %}
+            <h1>Mon compte</h1>
+        {% endif %}
 
-    {{ include('users/_form.html.twig', {'button_label': 'Update'}) }}
+        {{ include('users/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {% if app.user.id != user.id  %}
-    <a href="{{ path('users_index') }}">Revenir à la liste</a>
-    {% endif %}
+        {% if app.user.id != user.id  %}
+            <a href="{{ path('users_index') }}">Revenir à la liste</a>
+        {% endif %}
 
-    {% if app.user.id != user.id  %}
-    {{ include('users/_delete_form.html.twig') }}
-    {%  endif %}
-</div>
+        {% if app.user.id != user.id  %}
+            {{ include('users/_delete_form.html.twig') }}
+        {%  endif %}
+    </div>
 
 
 {% endblock %}
