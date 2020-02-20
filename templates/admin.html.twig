@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/admin.css"/>
 {% endblock%}
 {% block body %}
-{% include 'navbar.html.twig'%}
+    {% include 'navbar.html.twig'%}
     <!-- start of the main content  -->
     <div class="content">
         <div class="row">
@@ -13,7 +13,7 @@
                     <div class="bg-light border-right" id="sidebar-wrapper">
                         <div class="list-group list-group-flush">
                             <a href= {{ path('users_index') }} class="list-group-item list-group-item-action bg-light">Utilisateur</a>
-                            <a href="#" class="list-group-item list-group-item-action bg-light">Contexte</a>  
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Contexte</a>
                         </div>
                     </div>
                 </div>
