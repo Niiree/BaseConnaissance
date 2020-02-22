@@ -4,22 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
-
 use App\Repository\KnowledgesheetRepository;
-
 use Doctrine\ORM\EntityManagerInterface;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Routing\Annotation\Route;
+
 
 class KnowledgesheetController extends AbstractController
 {
     /**
      * @Route("/", name="knowledgesheet")
+     * @Security("is_granted('ROLE_ADMIN','ROLE_USER')")
      */
     public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {

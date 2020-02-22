@@ -76,6 +76,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/user/{id}/edit", name="users_edit", methods={"GET","POST"})
+     *  @Security("is_granted('ROLE_ADMIN','ROLE_USER')")
      */
     public function edit(Request $request, Users $user): Response
     {
@@ -96,6 +97,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/admin/user/{id}", name="users_delete", methods={"DELETE"})
+     * *  @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Users $user): Response
     {
