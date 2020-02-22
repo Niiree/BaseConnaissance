@@ -1,12 +1,12 @@
 {% extends 'base.html.twig'%}
 {% block body %}
-<form method="post" action="{{ path('users_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-<div class="form-group">
-    <input type="hidden" class="form-control" name="_method" value="DELETE">
-</div>
-<div class="form-group">
-    <input type="hidden" class="form-control" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
-</div>
-    <button class="btn btn-primary">Supprimer</button>
-</form>
+    <form method="post" action="{{ path('users_delete', {'id': user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+        <div class="form-group">
+            <input type="hidden" class="form-control" name="_method" value="DELETE">
+        </div>
+        <div class="form-group">
+            <input type="hidden" class="form-control" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+        </div>
+        <button class="btn btn-primary">Supprimer</button>
+    </form>
 {% endblock %}
