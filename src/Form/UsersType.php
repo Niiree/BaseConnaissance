@@ -6,6 +6,7 @@ use App\Entity\Users;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,8 +15,8 @@ class UsersType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('email');
+            ->add('username' ,TextareaType::class,['label'=>'Identifiant'])
+            ->add('email', TextareaType::class,['label'=>'E-mail']);
 
         if ($options['is_admin'] === true) {
             $builder->add('roles', ChoiceType::class, [
@@ -23,11 +24,12 @@ class UsersType extends AbstractType
                     'Administrateur' => 'ROLE_ADMIN',
                     'Contributeur' => 'ROLE_USER'
                 ],
-                'multiple' => true
+                'multiple' => true,
+                'label'=> "Rôle"
             ]);
         }
 
-        $builder->add('password', PasswordType::class)
+        $builder->add('password', PasswordType::class,['label'=> 'Mot de passe'])
         ;
     }
 
