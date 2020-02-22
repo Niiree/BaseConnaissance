@@ -4,13 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
-use App\Form\SearchFullTextType;
+
 use App\Repository\KnowledgesheetRepository;
-use Doctrine\DBAL\Types\TextType;
+
 use Doctrine\ORM\EntityManagerInterface;
-use http\Client\Curl\User;
-use phpDocumentor\Reflection\Type;
-use phpDocumentor\Reflection\Types\String_;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class KnowledgesheetController extends AbstractController
 {
     /**
-     * @Route("/knowledgesheet", name="knowledgesheet")
+     * @Route("/", name="knowledgesheet")
      */
     public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
@@ -33,7 +31,6 @@ class KnowledgesheetController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            var_dump($data);
             $knowledgesheet = $knowledgesheetRepository->searchfultexte($data['search_bar']);
         }
         else{
@@ -104,24 +101,6 @@ class KnowledgesheetController extends AbstractController
             'formKnowledgesheet' => $form->createView(),
         ]);
 
-    }
-
-
-    /**
-     * @Route("/admin", name="admin")
-     */
-    public function admin()
-    {
-
-        return $this->render('admin.html.twig');
-    }
-     /**
-     * @Route("/navbar", name="navbar")
-     */
-    public function navbar()
-    {
-
-        return $this->render('navbar.html.twig');
     }
 
 

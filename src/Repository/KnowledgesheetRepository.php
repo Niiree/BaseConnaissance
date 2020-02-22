@@ -27,9 +27,9 @@ class KnowledgesheetRepository extends ServiceEntityRepository
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('App\\Entity\\Knowledgesheet', "p");
         $sql = <<<SQL
-         SELECT id, content, title
+         SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title
          FROM knowledgesheet 
-         WHERE to_tsvector('french', content) @@ to_tsquery('french', :search)
+         WHERE to_tsvector('french', content) @@ plainto_tsquery('french', :search)
 SQL;
         $query = $this->_em->createNativeQuery($sql,$rsm);
         $query->setParameter('search', $search);

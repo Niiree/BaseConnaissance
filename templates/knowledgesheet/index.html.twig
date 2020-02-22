@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello KnowledgesheetController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
     {% include 'navbar.html.twig'%}
@@ -12,19 +12,15 @@
     <div class="example-wrapper">
         <h1>Fiche de connaissance</h1>
         <a href="{{ path('knowledgesheet_create') }}">Contribuer</a>
-
         <ul>
-
-            {{ form(formSearch)}} {# vue création #}
-            {# VAR DUMP
-     {{ render(controller('App\\Controller\\KnowledgesheetController:search')) }}  #}{#Include de la barre de recherche#}
-            {% for knowledgesheet in knowledgesheet %}
-                <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }}
-                    <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
-                    <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Supprimer</a>
-                </li>
-                {{ knowledgesheet.content }}
-            {% endfor %}
-        </ul>
-    </div>
+           {{ form(formSearch)}} {# vue création #}
+       {% for knowledgesheet in knowledgesheet %}
+       <li> id  {{ knowledgesheet.id }} - {{ knowledgesheet.title }}
+           <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
+           <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Delete</a>
+       </li>
+        {{ knowledgesheet.content|raw }}
+    {% endfor %}
+   </ul>
+</div>
 {% endblock %}
