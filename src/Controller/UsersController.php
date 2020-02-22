@@ -11,13 +11,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-/**
- * @Route("/users")
- */
+
 class UsersController extends AbstractController
 {
     /**
-     * @Route("/", name="users_index", methods={"GET"})
+     * @Route("/admin/", name="users_index", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(UsersRepository $usersRepository): Response
@@ -28,7 +26,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="users_new", methods={"GET","POST"})
+     * @Route("/admin/new_user", name="users_new", methods={"GET","POST"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
@@ -60,7 +58,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="users_show", methods={"GET"})
+     * @Route("/admin/user/{id}", name="users_show", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
     public function show(Users $user, UserPasswordEncoderInterface $encoder): Response
@@ -77,7 +75,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="users_edit", methods={"GET","POST"})
+     * @Route("/user/{id}/edit", name="users_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Users $user): Response
     {
@@ -97,7 +95,7 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="users_delete", methods={"DELETE"})
+     * @Route("/admin/user/{id}", name="users_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Users $user): Response
     {
