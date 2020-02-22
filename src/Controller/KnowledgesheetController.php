@@ -20,7 +20,7 @@ class KnowledgesheetController extends AbstractController
 {
     /**
      * @Route("/", name="knowledgesheet")
-     * @Security("is_granted('ROLE_ADMIN','ROLE_USER')")
+     * @Security("is_granted('ROLE_USER','ROLE_ADMIN')")
      */
     public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
@@ -48,6 +48,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
+     * @Security("is_granted('ROLE_USER','ROLE_ADMIN')")
      */
     public function create(EntityManagerInterface $entityManager, Request $request)
     {
@@ -71,6 +72,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/{id}/delete", name="delete")
+     * @Security("is_granted('ROLE_USER','ROLE_ADMIN')")
      */
     public function delete(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager)
     {
@@ -82,6 +84,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/{id}/edit", name="edit")
+     * @Security("is_granted('ROLE_USER','ROLE_ADMIN')")
      */
     public function edit(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager, request $request)
     {
