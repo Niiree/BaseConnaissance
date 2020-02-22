@@ -17,7 +17,9 @@
                     {% endif %}
                 </li>
                 <li class="nav-item">
+                    {% if  is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')  %}
                     <a class="nav-link" href="{{ path('users_edit', {'id': app.user.id}) }}">Mon Espace </a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>

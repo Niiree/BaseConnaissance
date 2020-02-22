@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
 {% endblock %}
 {% block body %}
-    {% include 'first.html.twig' %}
+    {% include 'navbar.html.twig'%}
 
     <div class="modal-dialog">
         <div class="main-section">
@@ -24,7 +24,10 @@
                             <div class="mb-3">
                                 Vous êtes connecté en tant que  {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
                             </div>
-                        {% endif %}
+
+                            {% else %}
+
+
 
                         <div class="form-group">
                             <label for="inputUsername">Identifiant</label>
@@ -68,6 +71,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {% endif %}
                         </div>
                     </form>
                 </div>
