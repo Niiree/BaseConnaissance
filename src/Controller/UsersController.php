@@ -76,7 +76,7 @@ class UsersController extends AbstractController
 
     /**
      * @Route("/user/{id}/edit", name="users_edit", methods={"GET","POST"})
-     *  @Security("is_granted('ROLE_USER','ROLE_ADMIN')")
+     *  @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, Users $user): Response
     {
