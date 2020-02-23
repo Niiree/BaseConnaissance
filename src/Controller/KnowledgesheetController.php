@@ -4,22 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
-
 use App\Repository\KnowledgesheetRepository;
-
 use Doctrine\ORM\EntityManagerInterface;
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Routing\Annotation\Route;
+
 
 class KnowledgesheetController extends AbstractController
 {
     /**
      * @Route("/", name="knowledgesheet")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
@@ -47,6 +48,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function create(EntityManagerInterface $entityManager, Request $request)
     {
@@ -70,6 +72,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/{id}/delete", name="delete")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function delete(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager)
     {
@@ -81,6 +84,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/{id}/edit", name="edit")
+     * @Security("is_granted('ROLE_USER','ROLE_ADMIN')")
      */
     public function edit(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager, request $request)
     {
