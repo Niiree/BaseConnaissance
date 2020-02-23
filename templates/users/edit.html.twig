@@ -7,7 +7,7 @@
         {% if (app.user.id != user.id and is_granted("ROLE_ADMIN")) %}
             <h1>Modification utilisateur</h1>
         {% else %}
-            <h1>Mon compte</h1>
+            <h2 class="text-center pt-xl-5 pb-3">Mon compte</h2>
         {% endif %}
 
 

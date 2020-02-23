@@ -6,28 +6,27 @@
     {% include 'navbar.html.twig'%}
     <div class="container">
 
-        <h1>Utilisateurs</h1>
+        <h2 class="text-center pt-xl-5 pb-3">Utilisateurs</h2>
 
-        <table class="table table-dark">
-            <tbody>
+        <table class="table table-striped table-bordered text-center">
+            <thead class="thead-dark">
+
             <tr>
                 <th scope="col">Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
                 <th scope="col">Identifiant</th>
-                <td>{{ user.username }}</td>
-            </tr>
-
-            <tr>
                 <th scope="col">E-mail</th>
-                <td>{{ user.email }}</td>
+                <th scope="col">Rôle</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+               <td scope="row">{{ user.id }}</td>
+               <td scope="row">{{ user.username }}</td>
+               <td scope="row">{{ user.email }}</td>
+               <td scope="row">{{ user.roles ? user.roles|json_encode : '' }}</td>
+
             </tr>
 
-            <tr>
-                <th scope="col">Rôle</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
             </tbody>
         </table>
 
