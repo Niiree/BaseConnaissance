@@ -84,7 +84,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/{id}/edit", name="edit")
-     * @Security("is_granted('ROLE_USER','ROLE_ADMIN')")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function edit(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager, request $request)
     {
