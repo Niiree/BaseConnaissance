@@ -1,39 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users index{% endblock %}
+{% block title %}Gestion des utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Index des utilisateurs</h1>
+    {% include 'navbar.html.twig'%}
+    <div class="content">
+        <div class="row">
+            <div class="col-sm-2" id="one">
+                <div class="d-flex" id="wrapper" class="custom">
+                    <div class="bg-light border-right" id="sidebar-wrapper">
+                        <div class="list-group list-group-flush">
+                            <a href= {{ path('users_index') }} class="list-group-item list-group-item-action bg-light">Utilisateur</a>
+                            <a href="#" class="list-group-item list-group-item-action bg-light">Contexte</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Roles</th>
-                <th>Password</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
-                <td>
-                    <a href="{{ path('users_show', {'id': user.id}) }}">Voir</a>
-                    <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+        </div>
+    </div>
+    <div class="container">
 
-    <a href="{{ path('users_new') }}">Créer un nouvel utilisateur</a>
+        <h2 class="text-center pb-3">Liste des utilisateurs</h2>
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Identifiant</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Rôle</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td scope="row">{{ user.id }}</td>
+                    <td scope="row">{{ user.username }}</td>
+                    <td scope="row">{{ user.email }}</td>
+                    {#Correction temporaire de l'affichage des rôles#}
+                    <td scope="row">
+                        {%   if (user.roles ? user.roles == ["ROLE_ADMIN"]) %}
+                            Administrateur
+                        {% elseif (user.roles ? user.roles == ["ROLE_USER"]) %}
+                            Utilisateur
+                        {%   endif %}</td>
+                    <td scope="row">
+                        <a class="mr-4" href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
+                        <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun utilisateur trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ path('users_new') }}">Créer un nouvel utilisateur</a>
+    </div>
 {% endblock %}

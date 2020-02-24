@@ -10,14 +10,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-/**
- * @Route("/users")
- */
 class UsersController extends AbstractController
 {
     /**
-     * @Route("/", name="users_index", methods={"GET"})
+     * @Route("/admin/", name="users_index", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(UsersRepository $usersRepository): Response
     {
@@ -27,12 +26,13 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="users_new", methods={"GET","POST"})
+     * @Route("/admin/new_user", name="users_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $user = new Users();
-        $form = $this->createForm(UsersType::class, $user);
+        $form = $this->createForm(UsersType::class, $user,['is_admin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,27 +58,47 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="users_show", methods={"GET"})
+     * @Route("/admin/user/{id}", name="users_show", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function show(Users $user): Response
+    public function show(Users $user, UserPasswordEncoderInterface $encoder): Response
     {
+        $user->setPassword(
+            $encoder->encodePassword(
+                $user,
+                $user->getPassword()
+            )
+        );
+        
         return $this->render('users/show.html.twig', [
             'user' => $user,
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="users_edit", methods={"GET","POST"})
+     * @Route("/user/{id}/edit", name="users_edit", methods={"GET","POST"})
+     *  @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
-    public function edit(Request $request, Users $user): Response
+    public function edit(Request $request, Users $user, UserPasswordEncoderInterface $encoder): Response
     {
-        $form = $this->createForm(UsersType::class, $user);
+        $form = $this->createForm(UsersType::class, $user, ['is_admin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('users_index');
+            $user->setPassword(
+                $encoder->encodePassword(
+                    $user,
+                    $user->getPassword()
+                )
+            );
+            
+            $this->getDoctrine()->getManager()->flush();
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('users_index');}
+            else{
+                return $this->redirectToRoute('knowledgesheet');
+            }
         }
 
         return $this->render('users/edit.html.twig', [
@@ -88,7 +108,8 @@ class UsersController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="users_delete", methods={"DELETE"})
+     * @Route("/admin/user/{id}", name="users_delete", methods={"DELETE"})
+     * *  @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Users $user): Response
     {

@@ -6,29 +6,49 @@ use App\Entity\Knowledgesheet;
 use App\Form\KnowledgesheetType;
 use App\Repository\KnowledgesheetRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Type;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Routing\Annotation\Route;
+
 
 class KnowledgesheetController extends AbstractController
 {
     /**
-     * @Route("/knowledgesheet", name="knowledgesheet")
+     * @Route("/", name="knowledgesheet")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
-    public function index(KnowledgesheetRepository $knowledgesheetRepository)
+    public function index(KnowledgesheetRepository $knowledgesheetRepository, Request $request)
     {
-        $knowledgesheet = $knowledgesheetRepository->findAll();
+        $form = $this->createFormBuilder()
+            ->add('search_bar',\Symfony\Component\Form\Extension\Core\Type\TextType::class,['label'=> false])
+            ->add('Rechercher', SubmitType::class)
+            ->getForm();
+        $knowledgesheet = null;
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $knowledgesheet = $knowledgesheetRepository->searchfultexte($data['search_bar']);
+        }
+        else{
+            $data['search'] = '1';
+        }
+
 
         return $this->render('knowledgesheet/index.html.twig', [
             'knowledgesheet' => $knowledgesheet,
+            'knowledgesheet/searchKnow.html.twig',
+                'formSearch' => $form->createView()
         ]);
     }
+
     /**
      * @Route("/knowledgesheet/create", name="knowledgesheet_create")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function create(EntityManagerInterface $entityManager, Request $request)
     {
@@ -45,7 +65,6 @@ class KnowledgesheetController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('knowledgesheet');
         }
-
         return $this ->render('knowledgesheet/create.html.twig',[
             'formKnowledgesheet' => $form->createView(),
         ]);
@@ -53,6 +72,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/{id}/delete", name="delete")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function delete(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager)
     {
@@ -64,6 +84,7 @@ class KnowledgesheetController extends AbstractController
 
     /**
      * @Route("/knowledgesheet/{id}/edit", name="edit")
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
      */
     public function edit(Knowledgesheet $knowledgesheet, EntityManagerInterface $entityManager, request $request)
     {
@@ -85,5 +106,6 @@ class KnowledgesheetController extends AbstractController
         ]);
 
     }
+
 
 }
