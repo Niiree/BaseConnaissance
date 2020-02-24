@@ -22,7 +22,7 @@
     <div class="container">
 
         <h2 class="text-center pb-3">Liste des utilisateurs</h2>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped text-center">
             <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
@@ -43,7 +43,7 @@
                     {# <td>{{ user.password }}</td> #}
 
                     <td scope="row">
-                        <a href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
+                        <a class="mr-4" href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
                         <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
                     </td>
                 </tr>

@@ -5,7 +5,7 @@
 
     <div class="container">
         {% if (app.user.id != user.id and is_granted("ROLE_ADMIN")) %}
-            <h1>Modification utilisateur</h1>
+            <h2 class="text-center pt-xl-5 pb-5">Modification utilisateur</h2>
         {% else %}
             <h2 class="text-center pt-xl-5 pb-3">Mon compte</h2>
         {% endif %}
@@ -14,7 +14,7 @@
         {% if app.user.id == user.id or is_granted("ROLE_ADMIN") %}
             {{ include('users/_form.html.twig', {'button_label': 'Mise à jour'}) }}
         {% else %}
-            <h1> Vous n'avez pas accès à ce contenu</h1>
+            <h2> Vous n'avez pas accès à ce contenu</h2>
         {% endif %}
 
 
