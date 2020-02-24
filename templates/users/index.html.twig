@@ -38,8 +38,13 @@
                     <td scope="row">{{ user.id }}</td>
                     <td scope="row">{{ user.username }}</td>
                     <td scope="row">{{ user.email }}</td>
-                    <td scope="row">{{ user.roles ? user.roles|json_encode : '' }}</td>
-
+                    {#Correction temporaire de l'affichage des rôles#}
+                    <td scope="row">
+                        {%   if (user.roles ? user.roles == ["ROLE_ADMIN"]) %}
+                            Administrateur
+                        {% elseif (user.roles ? user.roles == ["ROLE_USER"]) %}
+                            Utilisateur
+                        {%   endif %}</td>
                     <td scope="row">
                         <a href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
                         <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
