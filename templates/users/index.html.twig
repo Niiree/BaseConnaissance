@@ -29,7 +29,6 @@
                 <th scope="col">Identifiant</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Rôle</th>
-                {#<th scope="col">Password</th>#}
                 <th scope="col">Action</th>
             </tr>
             </thead>
@@ -39,9 +38,13 @@
                     <td scope="row">{{ user.id }}</td>
                     <td scope="row">{{ user.username }}</td>
                     <td scope="row">{{ user.email }}</td>
-                    <td scope="row">{{ user.roles ? user.roles|json_encode : '' }}</td>
-                    {# <td>{{ user.password }}</td> #}
-
+                    {#Correction temporaire de l'affichage des rôles#}
+                    <td scope="row">
+                        {%   if (user.roles ? user.roles == ["ROLE_ADMIN"]) %}
+                            Administrateur
+                        {% elseif (user.roles ? user.roles == ["ROLE_USER"]) %}
+                            Utilisateur
+                        {%   endif %}</td>
                     <td scope="row">
                         <a class="mr-4" href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
                         <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
