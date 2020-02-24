@@ -69,6 +69,7 @@ class UsersController extends AbstractController
                 $user->getPassword()
             )
         );
+        
         return $this->render('users/show.html.twig', [
             'user' => $user,
         ]);
