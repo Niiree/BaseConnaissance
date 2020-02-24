@@ -94,8 +94,11 @@ class UsersController extends AbstractController
             );
             
             $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('users_index');
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('users_index');}
+            else{
+                return $this->redirectToRoute('knowledgesheet');
+            }
         }
 
         return $this->render('users/edit.html.twig', [
