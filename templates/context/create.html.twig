@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Contexte{% endblock %}
+{% block title %}Création contexte{% endblock %}
 
 {% block body %}
     {% include 'navbar.html.twig'%}
@@ -10,9 +10,16 @@
     </style>
     <div class="container">
         <div class="example-wrapper">
-            <h2 class="text-center pt-xl-5 pb-4">Liste des contextes</h2>
+            <h2 class="text-center pt-xl-5 pb-4">Administration des contextes</h2>
+            {% for context in contexts %}
+                {{ context.id }} -
+                {{ context.name }}
+                <br>
+            {% endfor %}
 
-            {{ render (controller ('App\\Controller\\ContextController::create')) }}
+                {{ form(formContext) }}
+
+
         </div>
     </div>
 {% endblock %}
