@@ -26,6 +26,11 @@ class Knowledgesheet
      */
     private $content;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $keyword;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Knowledgesheet
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getKeyword(): ?string
+    {
+        return $this->keyword;
+    }
+
+    public function setKeyword(?string $keyword): self
+    {
+        $this->keyword = $keyword;
 
         return $this;
     }
