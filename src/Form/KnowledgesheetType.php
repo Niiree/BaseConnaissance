@@ -17,6 +17,7 @@ class KnowledgesheetType extends AbstractType
         $builder
             ->add('title',TextType::class,['label'=>'Titre'])
             ->add('content', TextareaType::class,['label'=>'Contenu'])
+            ->add('keyword',TextType::class,['label' =>'Mot-clé'])
         ;
     }
 

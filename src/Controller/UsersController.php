@@ -44,7 +44,7 @@ class UsersController extends AbstractController
                     $user->getPassword()
                 )
             );
-            
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -61,7 +61,7 @@ class UsersController extends AbstractController
      * @Route("/admin/user/{id}", name="users_show", methods={"GET"})
      * @Security("is_granted('ROLE_ADMIN')")
      */
-    public function show(Users $user,  UserPasswordEncoderInterface $encoder): Response
+    public function show(Users $user, UserPasswordEncoderInterface $encoder): Response
     {
         $user->setPassword(
             $encoder->encodePassword(
@@ -84,7 +84,6 @@ class UsersController extends AbstractController
         $form = $this->createForm(UsersType::class, $user, ['is_admin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);
 
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $user->setPassword(
@@ -93,9 +92,13 @@ class UsersController extends AbstractController
                     $user->getPassword()
                 )
             );
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('users_index');
+            $this->getDoctrine()->getManager()->flush();
+            if ($this->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('users_index');}
+            else{
+                return $this->redirectToRoute('knowledgesheet');
+            }
         }
 
         return $this->render('users/edit.html.twig', [
