@@ -29,7 +29,8 @@ class KnowledgesheetRepository extends ServiceEntityRepository
         $sql = <<<SQL
          SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title
          FROM knowledgesheet 
-         WHERE to_tsvector('french', content) @@ plainto_tsquery('french', :search)
+         WHERE to_tsvector('french', title || ' ' || content || ' ' || keyword) @@ plainto_tsquery('french', :search)
+         
 SQL;
         $query = $this->_em->createNativeQuery($sql,$rsm);
         $query->setParameter('search', $search);
