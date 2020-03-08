@@ -15,6 +15,7 @@
             <ul>
                 {{ form(formSearch)}} {# vue création #}
                 {% for knowledgesheet in knowledgesheet %}
+                    {{ knowledgesheet.id }}
                     <li>{{ knowledgesheet.title }}
                         <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
                         <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Supprimer</a>

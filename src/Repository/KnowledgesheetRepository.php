@@ -26,11 +26,19 @@ class KnowledgesheetRepository extends ServiceEntityRepository
 // Requete de recherche full texte
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('App\\Entity\\Knowledgesheet', "p");
-        $sql = <<<SQL
+        $sql =
+            <<<SQL
          SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title
-         FROM knowledgesheet 
-         WHERE to_tsvector('french', content) @@ plainto_tsquery('french', :search)
+         FROM knowledgesheet
+         WHERE  knowledgesheet.fulltext @@ plainto_tsquery('french',:search)
+
+
 SQL;
+        // Requete SQL corrigé par un trigger.
+//        SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title
+//        FROM knowledgesheet
+//        WHERE to_tsvector('french', content) @@ plainto_tsquery('french', :search)
+
         $query = $this->_em->createNativeQuery($sql,$rsm);
         $query->setParameter('search', $search);
         return $result = $query->getResult();
