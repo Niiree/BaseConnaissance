@@ -15,12 +15,12 @@
             <ul>
                 {{ form(formSearch)}} {# vue création #}
                 {% for knowledgesheet in knowledgesheet %}
-                    <li>{{ knowledgesheet.title }}
+                    {{ knowledgesheet.title }}
                         <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
                         <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Supprimer</a>
-                    </li>
-                    {{ knowledgesheet.content|raw }}
-                    {{ knowledgesheet.keyword }}
+
+                    <p>{{ knowledgesheet.content|raw }}
+                    {{ knowledgesheet.keyword }}</p>
                     <br>
                 {% endfor %}
             </ul>
