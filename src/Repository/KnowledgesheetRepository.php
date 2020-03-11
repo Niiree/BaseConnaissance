@@ -31,6 +31,7 @@ class KnowledgesheetRepository extends ServiceEntityRepository
          SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title
          FROM knowledgesheet
          WHERE  knowledgesheet.fulltext @@ plainto_tsquery('french',:search)
+
 SQL;
         // Requete SQL corrigé par un trigger.
 //        SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title
