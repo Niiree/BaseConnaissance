@@ -28,7 +28,7 @@ class KnowledgesheetRepository extends ServiceEntityRepository
         $rsm->addRootEntityFromClassMetadata('App\\Entity\\Knowledgesheet', "p");
         $sql =
             <<<SQL
-         SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title, keyword
+         SELECT id, ts_headline(content, plainto_tsquery('french', :search)), content as content, title, keyword
          FROM knowledgesheet
          WHERE  knowledgesheet.fulltext @@ plainto_tsquery('french',:search)
 
