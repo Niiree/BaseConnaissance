@@ -12,20 +12,20 @@
         <div class="example-wrapper">
             <h2 class="text-center pt-xl-5 pb-4">Fiche de connaissance</h2>
             <a href="{{ path('knowledgesheet_create') }}">Contribuer</a>
+            <div class="search-bar">{{ form(formSearch)}} </div>{# creation de la barre de recherche#}
             <ul>
-                {{ form(formSearch)}} {# vue création #}
                 {% for knowledgesheet in knowledgesheet %}
-                    <div class="knowledge headline">
-                    {{ knowledgesheet.id }}
+                    <div class="knowledge">
+                        {#{{ knowledgesheet.id }} ID de la fiche pour le debug #}
                     <li>{{ knowledgesheet.title }}
                         <a href="{{ path('edit',{'id':knowledgesheet.id}) }}">Editer</a> -
                         <a href="{{ path('delete',{'id':knowledgesheet.id}) }}">Supprimer</a>
                     </li>
-                    {{ knowledgesheet.content|raw }}
-                    {{ knowledgesheet.keyword }}
+                    <ul>
+                    <li>{{ knowledgesheet.content|raw }}
+                    {{ knowledgesheet.keyword }}</li>
+                    </ul>
                     </div>
-                    <br>
-
                 {% endfor %}
             </ul>
         </div>
