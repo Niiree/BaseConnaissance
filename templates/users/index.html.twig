@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Gestion des utilisateurs{% endblock %}
-
 {% block body %}
     {% include 'navbar.html.twig'%}
     <div class="content">
@@ -38,7 +36,6 @@
                     <td scope="row">{{ user.id }}</td>
                     <td scope="row">{{ user.username }}</td>
                     <td scope="row">{{ user.email }}</td>
-                    {#Correction temporaire de l'affichage des rôles#}
                     <td scope="row">
                         {%   if (user.roles ? user.roles == ["ROLE_ADMIN"]) %}
                             Administrateur
@@ -46,7 +43,10 @@
                             Utilisateur
                         {%   endif %}</td>
                     <td scope="row">
-                        <a class="mr-4" href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
+                        {% if (user.roles ? user.roles == ["ROLE_ADMIN"]) %}
+                        {% else %}{#Rustine pour le soucis de deconnection admin#}
+                            <a class="mr-4" href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
+                        {% endif %}
                         <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
                     </td>
                 </tr>
@@ -57,7 +57,6 @@
             {% endfor %}
             </tbody>
         </table>
-
         <a href="{{ path('users_new') }}">Créer un nouvel utilisateur</a>
     </div>
 {% endblock %}
