@@ -16,10 +16,8 @@
                 {{ context.name }}
                 <br>
             {% endfor %}
-
                 {{ form(formContext) }}
-
-
+            <a href="{{ path('users_index') }}">Revenir à la liste</a>
         </div>
     </div>
 {% endblock %}
