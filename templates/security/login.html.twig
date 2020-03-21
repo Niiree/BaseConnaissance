@@ -2,7 +2,9 @@
 {% block title %}Connexion{% endblock %}
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/e90458a561.js"></script>
 {% endblock %}
+
 {% block body %}
     {% include 'navbar.html.twig'%}
 
@@ -27,8 +29,6 @@
 
                             {% else %}
 
-
-
                         <div class="form-group">
                             <label for="inputUsername">Identifiant</label>
                             <input type="text" class="form-control" value="{{ last_username }}" name="username" id="inputUsername" required autofocus>
@@ -36,7 +36,10 @@
 
                         <div class="form-group">
                             <label for="inputPassword">Mot de passe</label>
-                            <input type="password" class="form-control" name="password" id="inputPassword" required>
+                            <div class="input-group" id="show_hide_password">
+                            <input  class="form-control" name="password" id="inputPassword" type="password" required>
+                            <a href=""><i class="fas fa-eye-slash" aria-hidden="true"></i></a>
+                            </div>
                         </div>
 
                         <input type="hidden" class="btn btn-primary" name="_csrf_token"
@@ -82,5 +85,11 @@
             </div>
         </div>
     </div>
+
+    {% block javascripts %}
+
+        <script src="{{ asset('assets/js/show_hide.js') }}"></script>
+
+    {% endblock %}
 
 {% endblock %}
