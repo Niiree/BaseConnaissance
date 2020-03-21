@@ -20,7 +20,6 @@ class KnowledgesheetRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Knowledgesheet::class);
     }
-
     public function searchfultexte($search)
     {
 // Requete de recherche full texte
@@ -33,43 +32,9 @@ class KnowledgesheetRepository extends ServiceEntityRepository
          WHERE  knowledgesheet.fulltext @@ plainto_tsquery('french',:search)
          ORDER BY ts_rank(knowledgesheet.fulltext, plainto_tsquery('french', :search)) DESC
 SQL;
-        // Requete SQL corrigé par un trigger.
-//        SELECT id, ts_headline(content, plainto_tsquery('french', :search)) as content, title
-//        FROM knowledgesheet
-//        WHERE to_tsvector('french', content) @@ plainto_tsquery('french', :search)
-
+        // Recherche dans la table fulltext (Voir le trigger)
         $query = $this->_em->createNativeQuery($sql,$rsm);
         $query->setParameter('search', $search);
         return $result = $query->getResult();
-
     }
-    //
-    // /**
-    //  * @return Knowledgesheet[] Returns an array of Knowledgesheet objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('k')
-            ->andWhere('k.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('k.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Knowledgesheet
-    {
-        return $this->createQueryBuilder('k')
-            ->andWhere('k.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
