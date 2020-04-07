@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Context;
 use App\Entity\Users;
 use App\Form\UsersType;
 use App\Repository\UsersRepository;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class UsersController extends AbstractController
 {
@@ -83,6 +85,7 @@ class UsersController extends AbstractController
     {
         $form = $this->createForm(UsersType::class, $user, ['is_admin' => $this->isGranted('ROLE_ADMIN')]);
         $form->handleRequest($request);
+        $userContexts = $user->getContexts();
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -103,6 +106,7 @@ class UsersController extends AbstractController
 
         return $this->render('users/edit.html.twig', [
             'user' => $user,
+            'contexts' => $userContexts,
             'form' => $form->createView(),
         ]);
     }

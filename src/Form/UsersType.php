@@ -2,14 +2,23 @@
 
 namespace App\Form;
 
+use App\Entity\Context;
 use App\Entity\Users;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\Collection;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Doctrine\ORM\Mapping as ORM;
+
+
+
 
 class UsersType extends AbstractType
 {
@@ -30,8 +39,15 @@ class UsersType extends AbstractType
             ]);
         }
 
-        $builder->add('password', PasswordType::class,['label'=> 'Mot de passe'])
-        ;
+        $builder->add('password', PasswordType::class,['label'=> 'Mot de passe']);
+
+        $builder->add('contexts', EntityType::class, [
+            'class' => Context::class,
+            'choice_label' => 'name',
+            'multiple' => true,
+            'expanded' => true,
+        ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
