@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -37,6 +39,17 @@ class Users implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Context", inversedBy="users")
+     */
+
+    private $contexts;
+
+    public function __construct()
+    {
+        $this->contexts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,6 +137,42 @@ class Users implements UserInterface
     }
 
     /**
+     * @return Collection|Context[]
+     */
+    public function getContexts(): Collection
+    {
+        return $this->contexts;
+    }
+
+    /**
+     * @param mixed $contexts
+     */
+   public function setContexts($contexts): void
+   {
+       $this->contexts = $contexts;
+   }
+
+   public function addContext(Context $context): self
+    {
+        if (!$this->contexts->contains($context)) {
+            //$this->contexts[] = $context;
+            $this->contexts->add($context);
+            $context->addUser($this);
+    }
+
+        return $this;
+    }
+
+    public function removeContext(Context $context): self
+    {
+        if ($this->contexts->contains($context)) {
+            $this->contexts->removeElement($context);
+            $context->removeUser($this);
+        }
+
+        return $this;
+    }
+
      * @var string le token qui servira lors de l'oubli de mot de passe
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -162,3 +211,4 @@ class Users implements UserInterface
         return $this;
     }
 }
+
