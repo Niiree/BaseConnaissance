@@ -173,8 +173,9 @@ class Users implements UserInterface
         return $this;
     }
 
-     * @var string le token qui servira lors de l'oubli de mot de passe
-     * @ORM\Column(type="string", length=255, nullable=true)
+    /*
+     *@var string le token qui servira lors de l'oubli de mot de passe
+     *@ORM\Column(type="string", length=255, nullable=true)
      */
     protected $resetToken;
 
