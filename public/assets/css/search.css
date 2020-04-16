@@ -1,0 +1,15 @@
+/*Suppresion de l'indication visuel de la liste*/
+.ulsearch {
+   list-style-type: none;
+}
+.ulsearch  ul  li{
+   list-style-type: none ;
+}
+
+.div_button_edit_supp{
+   width: 100%;
+}
+.button_edit_supp{
+   float: right;
+   padding-left: 30px;
+}

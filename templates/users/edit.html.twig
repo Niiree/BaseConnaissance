@@ -1,34 +1,31 @@
 {% extends 'base.html.twig' %}
-{% block title %}Mon espace{% endblock %}
+{% block title %}
+    {% if (app.user.id != user.id) %}
+        Editer utilisateur
+    {% else %}
+        Mon espace
+    {% endif %}
+{% endblock %}
 {% block body %}
-    {% include 'navbar.html.twig'%}
-
+{% block navbar %}{% include 'navbar.html.twig'%}{% endblock %}
     <div class="container">
         {% if (app.user.id != user.id and is_granted("ROLE_ADMIN")) %}
             <h2 class="text-center pt-xl-5 pb-5">Modification utilisateur</h2>
         {% else %}
             <h2 class="text-center pt-xl-5 pb-3">Mon compte</h2>
         {% endif %}
-
-
         {% if app.user.id == user.id or is_granted("ROLE_ADMIN") %}
             {{ include('users/_form.html.twig', {'button_label': 'Mise à jour'}) }}
         {% else %}
             <h2> Vous n'avez pas accès à ce contenu</h2>
         {% endif %}
-
-
         {% if (is_granted("ROLE_ADMIN")) %}
             <a href="{{ path('users_index') }}">Revenir à la liste</a>
-            {% else %}
-                <a href="{{ path('knowledgesheet') }}">Revenir à l'accueil</a>
+        {% else %}
+            <a href="{{ path('knowledgesheet') }}">Revenir à l'accueil</a>
         {%  endif %}
-
-
         {% if (app.user.id != user.id and is_granted("ROLE_ADMIN")) %}
             {{ include('users/_delete_form.html.twig') }}
         {%  endif %}
     </div>
-
-
 {% endblock %}

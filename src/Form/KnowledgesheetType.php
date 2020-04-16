@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Knowledgesheet;
 use Doctrine\DBAL\Types\StringType;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,7 +17,8 @@ class KnowledgesheetType extends AbstractType
     {
         $builder
             ->add('title',TextType::class,['label'=>'Titre'])
-            ->add('content', TextareaType::class,['label'=>'Contenu'])
+            ->add('content', CKEditorType::class,['label'=>'Contenu'])
+            ->add('keyword',TextType::class,['label' =>'Mot-clé'])
         ;
     }
 

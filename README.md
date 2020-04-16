@@ -3,23 +3,34 @@
 Projet de fin d'année de la formation WebImPulse 2019 concernant une base de connaissance.
 
 
-## Pour initialisation du projet
+## Pour initialiser le projet
 
 1 - Effectuer la commande  pour récupérer l'intégralité du projet depuis Github vers votre poste.
 ```
 git clone git@github.com:nicolas-le-stunff/BaseConnaissance.git 
 ``` 
 
-2 -  Sur le terminal et dans le dossier racine du projet, exécuter la commande pour installer les dépendances du projet (composer.json)
+2 -  Sur le terminal et dans le dossier racine du projet, exécuter les commandes pour installer les dépendances du projet
 ```
 composer install
+symfony console ckeditor:install
+symfony console assets:install public
 ```
  
 3 -  Copier le fichier `.env` vers la racine du projet et le renommer en `.en.local`. Le fichier en question servira de configuration entre le projet et votre base de donnée.
 
-4 -  Modifier la ligne `DATABASE_URL=postgresql://{nom}:{motdepasse@{adresse de la bdd}/{nomdelabasededonnée}?serverVersion={versionDuServeur}&charset=utf8`  
+4 -  Modifier la ligne 
+```
+DATABASE_URL=postgresql://{nom}:{motdepasse@{adresse de la bdd}/{nomdelabasededonnée}?serverVersion={versionDuServeur}&charset=utf8
+``` 
 
-5 - Le projet est prêt à être utilisé sur symfony
+5 - Effectuer l'application des migrations sur le terminal
+
+``
+Symfony console do:mi:mi
+``
+ 
+6 - Le projet est prêt à être utilisé sur symfony
 
 ## Règle 
 ### Les branches
