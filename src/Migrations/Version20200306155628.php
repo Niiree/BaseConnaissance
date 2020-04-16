@@ -24,7 +24,7 @@ final class Version20200306155628 extends AbstractMigration
 
         $this->addSql('CREATE TABLE users_context (context_id INT NOT NULL, users_id INT NOT NULL, PRIMARY KEY(context_id, users_id))');
         $this->addSql('CREATE INDEX IDX_4594C9976B00C1CF ON users_context (context_id)');
-        $this->addSql('CREATE INDEX IDX_4594C99767B3B43D ON context_users (users_id)');
+        $this->addSql('CREATE INDEX IDX_4594C99767B3B43D ON users_context (users_id)');
         $this->addSql('ALTER TABLE users_context ADD CONSTRAINT FK_4594C9976B00C1CF FOREIGN KEY (context_id) REFERENCES context (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE users_context ADD CONSTRAINT FK_4594C99767B3B43D FOREIGN KEY (users_id) REFERENCES users (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
