@@ -7,9 +7,8 @@
     {% endif %}
 {% endblock %}
 {% block body %}
-{% block navbar %}{% include 'navbar.html.twig'%}{% endblock %}
+    {% block navbar %}{% include 'navbar.html.twig'%}{% endblock %}
     <div class="container">
-
         {% if (app.user.id != user.id and is_granted("ROLE_ADMIN")) %}
             <h2 class="text-center pt-xl-5 pb-5">Modification utilisateur</h2>
         {% else %}

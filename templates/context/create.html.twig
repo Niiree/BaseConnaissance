@@ -1,7 +1,5 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Création contexte{% endblock %}
-
 {% block body %}
     {% include 'navbar.html.twig'%}
     <style>
@@ -16,7 +14,7 @@
                 {{ context.name }}
                 <br>
             {% endfor %}
-                {{ form(formContext) }}
+            {{ form(formContext) }}
             <a href="{{ path('users_index') }}">Revenir à la liste</a>
         </div>
     </div>
