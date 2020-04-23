@@ -70,7 +70,9 @@ class SecurityController extends AbstractController
             $token = $tokenGenerator->generateToken();
 
             try {
+                var_dump($token);
                 $user->setResetToken($token);
+                $entityManager->persist($user);
                 $entityManager->flush();
             } catch (\Exception $e) {
                 $this->addFlash('warning', $e->getMessage());
