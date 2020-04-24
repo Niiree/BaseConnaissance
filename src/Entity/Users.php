@@ -46,6 +46,18 @@ class Users implements UserInterface
 
     private $contexts;
 
+    /**
+     * @var string le token qui servira lors de l'oubli de mot de passe
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $resetToken;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+
     public function __construct()
     {
         $this->contexts = new ArrayCollection();
@@ -173,16 +185,6 @@ class Users implements UserInterface
         return $this;
     }
 
-    /*
-     *@var string le token qui servira lors de l'oubli de mot de passe
-     *@ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $resetToken;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $token;
 
     /**
      * @return string
