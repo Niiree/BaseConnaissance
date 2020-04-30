@@ -1,10 +1,22 @@
-form .container{
-    display: flex;
-    justify-content: center;
+.container{
+    margin: 100px auto;
+    width: 700px !important;
 }
-form .password {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 75%;
+.forget{
+    background: #255988;
+    margin-top: 15px;
+    border-radius: 15px;
+    color: #FFFFFF;
+    padding: 15px;
+    box-shadow: 0 0 10px #DDD;
 }
+.forget hr{
+    border-top: 2px solid rgba(0,0,0,.1);
+}
+
+btn-primary:hover {
+    color: #fff;
+    background-color: #3f93c1   ;
+    border-color: #0062cc;
+}
+
