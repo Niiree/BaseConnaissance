@@ -39,6 +39,11 @@
                                 </div>
                             </div>
                         </div>
+                        {% for message in app.flashes('notice') %}
+                            <div class="flash-notice">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                         <input type="hidden" class="btn btn-primary" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}"> <br>
                         <div class="container">
