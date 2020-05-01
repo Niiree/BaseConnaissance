@@ -64,7 +64,7 @@ class SecurityController extends AbstractController
             /* @var $user Users */
 
             if ($user === null) {
-                $this->addFlash('danger', 'Email Inconnu');
+                $this->addFlash('notice', "Si l'adresse mentionnée est exacte, un mail vous a été envoyé");
                 return $this->redirectToRoute('app_login');
             }
             $token = $tokenGenerator->generateToken();
@@ -82,16 +82,16 @@ class SecurityController extends AbstractController
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
 
             $message = (new \Swift_Message('Mot de passe oublié'))
-                ->setFrom('coulonlois@gmail.com')
+                ->setFrom('baseconnaissanceumanit@gmail.com')
                 ->setTo($user->getEmail())
                 ->setBody(
-                    "Voici le lien pour créer un nouveau mot de passe : " . $url,
+                    "Bonjour " . $user->getUsername() . ", voici le lien pour créer un nouveau mot de passe : " . $url,
                     'text/html'
                 );
 
             $mailer->send($message);
 
-            $this->addFlash('notice', 'Mail envoyé');
+            $this->addFlash('notice', "Si l'adresse mentionnée est exacte, un mail vous a été envoyé");
 
             return $this->redirectToRoute('app_login');
         }
@@ -112,7 +112,7 @@ class SecurityController extends AbstractController
             /* @var $user Users */
 
             if ($user === null) {
-                $this->addFlash('danger', 'Token Inconnu');
+                $this->addFlash('notice', 'Token Inconnu');
                 return $this->redirectToRoute('app_login');
             }
 
