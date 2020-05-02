@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Repository\UsersRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -98,6 +99,46 @@ class SecurityController extends AbstractController
 
         return $this->render('security/forgotten_password.html.twig');
     }
+
+
+    /**
+     * @Route("/send_token", name="app_send_token")
+     */
+    public function sendToken(
+        Request $request,
+        UserPasswordEncoderInterface $encoder,
+        \Swift_Mailer $mailer,
+        TokenGeneratorInterface $tokenGenerator,
+        UsersRepository $usersRepository
+    ): Response
+    {
+        if ($request->isMethod("POST")) {
+            $email = $request->request->get('email');
+            $entityManager = $this->getDoctrine()->getManager();
+            $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
+            /* @var $user Users */
+            $token = $tokenGenerator->generateToken();
+
+            $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $message = (new \Swift_Message('Mot de passe oublié'))
+                ->setFrom('baseconnaissanceumanit@gmail.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    "Bonjour " . $user->getUsername() . ", voici le lien pour créer un nouveau mot de passe : " . $url,
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+            $this->addFlash('notice', "Un mail de réinitialisation de mot de passe a été envoyé à cet utilisateur");
+
+            return $this->redirectToRoute('users_index');
+        }
+
+        return $this->render("users/index.html.twig",['users'=> $usersRepository->findAll()]);
+    }
+
 
     /**
      * @Route("/reset_password/{token}", name="app_reset_password")
