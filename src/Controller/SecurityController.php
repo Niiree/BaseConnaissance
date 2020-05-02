@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Users;
 use App\Repository\UsersRepository;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,6 +61,7 @@ class SecurityController extends AbstractController
 
             $email = $request->request->get('email');
 
+
             $entityManager = $this->getDoctrine()->getManager();
             $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
             /* @var $user Users */
@@ -71,7 +73,6 @@ class SecurityController extends AbstractController
             $token = $tokenGenerator->generateToken();
 
             try {
-                var_dump($token);
                 $user->setResetToken($token);
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -102,41 +103,32 @@ class SecurityController extends AbstractController
 
 
     /**
-     * @Route("/send_token", name="app_send_token")
+     * @Route("/send_token/{id}", name="app_send_token")}
+     * Reset mot de passe coté Administrateur
      */
-    public function sendToken(
-        Request $request,
-        UserPasswordEncoderInterface $encoder,
-        \Swift_Mailer $mailer,
-        TokenGeneratorInterface $tokenGenerator,
-        UsersRepository $usersRepository
-    ): Response
+    public function sendToken(Users $users,\Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator): Response
     {
-        if ($request->isMethod("POST")) {
-            $email = $request->request->get('email');
-            $entityManager = $this->getDoctrine()->getManager();
-            $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
-            /* @var $user Users */
-            $token = $tokenGenerator->generateToken();
 
-            $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+        $email = $users->getEmail();
+        $token = $tokenGenerator->generateToken();
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
+        $user->setResetToken($token);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+        $message = (new \Swift_Message('Mot de passe oublié'))
+            ->setFrom('baseconnaissanceumanit@gmail.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                "Bonjour " . $user->getUsername() . ", voici le lien pour créer un nouveau mot de passe : " . $url,
+                'text/html'
+            );
 
-            $message = (new \Swift_Message('Mot de passe oublié'))
-                ->setFrom('baseconnaissanceumanit@gmail.com')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    "Bonjour " . $user->getUsername() . ", voici le lien pour créer un nouveau mot de passe : " . $url,
-                    'text/html'
-                );
+        $mailer->send($message);
 
-            $mailer->send($message);
+        return $this->redirectToRoute('users_index');
 
-            $this->addFlash('notice', "Un mail de réinitialisation de mot de passe a été envoyé à cet utilisateur");
-
-            return $this->redirectToRoute('users_index');
-        }
-
-        return $this->render("users/index.html.twig",['users'=> $usersRepository->findAll()]);
     }
 
 
