@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Users;
+use App\Repository\UsersRepository;
+use http\Client\Curl\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,6 +61,7 @@ class SecurityController extends AbstractController
 
             $email = $request->request->get('email');
 
+
             $entityManager = $this->getDoctrine()->getManager();
             $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
             /* @var $user Users */
@@ -70,7 +73,6 @@ class SecurityController extends AbstractController
             $token = $tokenGenerator->generateToken();
 
             try {
-                var_dump($token);
                 $user->setResetToken($token);
                 $entityManager->persist($user);
                 $entityManager->flush();
@@ -98,6 +100,37 @@ class SecurityController extends AbstractController
 
         return $this->render('security/forgotten_password.html.twig');
     }
+
+
+    /**
+     * @Route("/send_token/{id}", name="app_send_token")}
+     * Reset mot de passe coté Administrateur
+     */
+    public function sendToken(Users $users,\Swift_Mailer $mailer, TokenGeneratorInterface $tokenGenerator): Response
+    {
+
+        $email = $users->getEmail();
+        $token = $tokenGenerator->generateToken();
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
+        $user->setResetToken($token);
+        $entityManager->persist($user);
+        $entityManager->flush();
+        $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+        $message = (new \Swift_Message('Mot de passe oublié'))
+            ->setFrom('baseconnaissanceumanit@gmail.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                "Bonjour " . $user->getUsername() . ", voici le lien pour créer un nouveau mot de passe : " . $url,
+                'text/html'
+            );
+
+        $mailer->send($message);
+
+        return $this->redirectToRoute('users_index');
+
+    }
+
 
     /**
      * @Route("/reset_password/{token}", name="app_reset_password")
