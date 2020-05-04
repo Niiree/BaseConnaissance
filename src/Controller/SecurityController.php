@@ -14,10 +14,7 @@ use App\Services\Mailer;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-//use Symfony\Component\Validator\Constraints\Email;
-//use Symfony\Component\Validator\Constraints\NotBlank;
-//use Symfony\Component\Form\Extension\Core\Type\EmailType;
-//use Doctrine\Persistence\ObjectManager;
+
 
 class SecurityController extends AbstractController
 {
@@ -46,6 +43,23 @@ class SecurityController extends AbstractController
         throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 
+
+    // si supérieur à 10min, retourne false
+    // sinon retourne true
+    private function isRequestInTime(\Datetime $passwordRequestedAt = null)
+    {
+        if ($passwordRequestedAt === null) {
+            return false;
+        }
+
+        $now = new \DateTime();
+        $interval = $now->getTimestamp() - $passwordRequestedAt->getTimestamp();
+
+        $daySeconds = 60*10;
+        $response = $interval > $daySeconds ? false : $reponse = true;
+        return $response;
+    }
+
     /**
      * @Route("/forgotten_password", name="app_forgotten_password")
      */
@@ -71,6 +85,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('app_login');
             }
             $token = $tokenGenerator->generateToken();
+            $user->setPasswordRequestedAt(new \Datetime());
 
             try {
                 $user->setResetToken($token);
@@ -114,6 +129,7 @@ class SecurityController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
         $user->setResetToken($token);
+        $user->setPasswordRequestedAt(new \Datetime());
         $entityManager->persist($user);
         $entityManager->flush();
         $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
@@ -126,7 +142,7 @@ class SecurityController extends AbstractController
             );
 
         $mailer->send($message);
-
+        $this->addFlash('notice', "Un mail de réinitialisation de mot de passe a été envoyé à cet utilisateur");
         return $this->redirectToRoute('users_index');
 
     }
@@ -144,12 +160,14 @@ class SecurityController extends AbstractController
             $user = $entityManager->getRepository(Users::class)->findOneByResetToken($token);
             /* @var $user Users */
 
-            if ($user === null) {
-                $this->addFlash('notice', 'Token Inconnu');
-                return $this->redirectToRoute('app_login');
+            if ($user->getResetToken() === null || $token !== $user->getResetToken() || !$this->isRequestInTime($user->getPasswordRequestedAt()))
+            {
+                $this->addFlash('notice', 'Token Inconnu ou expiré. Veuillez recommencer');
+                    return $this->redirectToRoute('app_login');
             }
 
             $user->setResetToken(null);
+            $user->setPasswordRequestedAt(null);
             $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
             $entityManager->flush();
 
