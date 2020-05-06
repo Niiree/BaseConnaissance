@@ -65,5 +65,10 @@
             </tbody>
         </table>
         <a href="{{ path('users_new') }}">Créer un nouvel utilisateur</a>
+        {% for message in app.flashes('notice') %}
+            <div class="flash-notice">
+                {{ message }}
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
