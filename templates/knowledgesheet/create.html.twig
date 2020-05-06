@@ -1,9 +1,17 @@
 {% extends 'base.html.twig' %}
 {% block title %}Création fiche de connaissance{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/ksCreate.css') }}">
+{% endblock %}
 {% block body %}
     {% include 'navbar.html.twig'%}
-    <div class="example-wrapper">
-        {{ form(formKnowledgesheet) }}
+    <div class="example-wrapper mt-lg-5">
+        <h3 class="text-center mb-2">Création d'une fiche de connaissance</h3>
+        <div class="jumbotron">
+            {{ form(formKnowledgesheet) }}
+        </div>
         <a href="{{ path('knowledgesheet') }}">Revenir à la liste</a>
     </div>
 {% endblock %}
+

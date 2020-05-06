@@ -2,56 +2,71 @@
 {% block title %}Connexion{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/login.css') }}">
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    <script src="{{ asset('assets/js/show_hide.js') }}" ></script>
+    <script src="{{ asset('assets/js/show_hide.js') }}"></script>
 {% endblock %}
 {% block body %}
-    {% include 'navbar.html.twig'%}
-    <div class="modal-dialog">
-        <div class="main-section">
-            <div class="modal-content">
-                    <img src="{{ asset('assets/image/user-login.png') }}" alt="user" width="200px" height="200px">
-                <div class="col-12 form-input">
-                    <form method="post">
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
-                        {% if app.user %}
-                        <div class="mb-3">
-                            Vous êtes connecté en tant que  {{ app.user.username }} <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </div>
-                        {% else %}
-                        <div class="form-group">
-                            <label for="inputUsername">Identifiant</label>
-                            <input type="text" class="form-control" value="{{ last_username }}" name="username" id="inputUsername" required autofocus>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputPassword">Mot de passe</label>
-                            <div class="input-group" id="show_hide_password">
-                                <input class="form-control" type="password" id="password" name="password" required />
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+    <div class="content">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="{{ path('knowledgesheet') }}">
+                    <img src="{{ asset('assets/image/logo.svg') }}" alt="Logo">
+                </a>
+            </nav>
+            <div class="main">
+                <div class="row">
+                    <div class="col-md-6 login">
+                        <img src="{{ asset('assets/image/user-login.png') }}" alt="" class="profile">
+                        <form method="post">
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+                            {% if app.user %}
+                            <div class="mb-3">
+                                Vous êtes connecté en tant que {{ app.user.username }} <a
+                                        href="{{ path('app_logout') }}">Se déconnecter</a>
+                            </div>
+                            {% else %}
+                            <div class="form-group">
+                                <label for="inputUsername">Identifiant</label>
+                                <input type="text" class="form-control" value="{{ last_username }}" name="username"
+                                       id="inputUsername" required autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword">Mot de passe</label>
+                                <div class="input-group" id="show_hide_password">
+                                    <input class="form-control" type="password" id="password" name="password" required/>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <input type="hidden" class="btn btn-primary" name="_csrf_token"
-                               value="{{ csrf_token('authenticate') }}"> <br>
-                        <div class="container">
-                            <div class="row ustify-content-center">
-                                <div class="md-6">
-                                    <button type="submit" class="btn btn-primary">Se connecter</button>
-                                </div>
-                                <div class="md-6 ml-auto">
-                                    <a  href="{{ path('app_forgotten_password') }}">Mot de passe oublié</a>
+                            <input type="hidden" class="btn btn-primary" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}"> <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="md-6">
+                                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                                    </div>
+                                    <div class="md-6 ml-auto oublié">
+                                        <a href="#">Mot de passe oublié</a>
+                                    </div>
                                 </div>
                             </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6 hello">
+                        <div class="texte">
+                            <h1 class="text-center">Base de connaissances</h1>
+                            <p class="text-center text-justify">Welcome to our site</p>
                         </div>
-                    </form>
+                    </div>
                     {% endif %}
                 </div>
             </div>
