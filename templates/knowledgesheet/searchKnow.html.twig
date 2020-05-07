@@ -1,8 +1,4 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-       {{ parent() }}
-       <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/search.css') }}">
-{% endblock %}
 {% block body %}
        {{ form(formSearch)}} {# vue création #}
        {{ dump(formSearch) }}

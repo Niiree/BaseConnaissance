@@ -3,12 +3,8 @@
 {% block body %}
     {%include 'navbar.html.twig'%}
     <div class="container">
-        <div class="example-wrapper mt-lg-5">
-            <h3 class="text-center mb-2">Créer un nouvel utilisateur</h3>
-            <div class="jumbotron">
-                {{ include('users/_form.html.twig') }}
-            </div>
-            <a href="{{ path('users_index') }}">Revenir à la liste</a>
-        </div>
+        <h2 class="text-center pt-xl-5 pb-3">Créer un nouvel utilisateur</h2>
+        {{ include('users/_form.html.twig') }}
+        <a href="{{ path('users_index') }}">Revenir à la liste</a>
     </div>
 {% endblock %}
