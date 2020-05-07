@@ -47,16 +47,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" class="btn btn-primary" name="_csrf_token"
-                                   value="{{ csrf_token('authenticate') }}"> <br>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="md-6">
-                                        <button type="submit" class="btn btn-primary">Envoyer</button>
-                                    </div>
-                                    <div class="md-6 ml-auto oublié">
-                                        <a href="#">Mot de passe oublié</a>
-                                    </div>
+                        </div>
+                        {% for message in app.flashes('notice') %}
+                            <div class="flash-notice">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        <input type="hidden" class="btn btn-primary" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"> <br>
+                        <div class="container">
+                            <div class="row ustify-content-center">
+                                <div class="md-6">
+                                    <button type="submit" class="btn btn-primary">Se connecter</button>
+                                </div>
+                                <div class="md-6 ml-auto">
+                                    <a  href="{{ path('app_forgotten_password') }}">Mot de passe oublié</a>
                                 </div>
                             </div>
                         </form>
