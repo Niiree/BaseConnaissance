@@ -3,7 +3,9 @@
 {% block body %}
     {% include 'navbar.html.twig'%}
     <div class="example-wrapper">
-        {{ form(formKnowledgesheet) }}
-        <a href="{{ path('knowledgesheet') }}">Revenir à la liste</a>
+        <div class="container">
+            {{ form(formKnowledgesheet) }}
+            <a href="{{ path('knowledgesheet') }}">Revenir à la liste</a>
+        </div>
     </div>
 {% endblock %}
