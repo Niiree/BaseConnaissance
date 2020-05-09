@@ -50,7 +50,7 @@
                     </td>
                     <td scope="row">
                         {% if (user.roles ? user.roles == ["ROLE_ADMIN"]) %}
-                        {% else %}{#Rustine pour le soucis de deconnection admin#}
+                        {% else %}{#Rustine pour le soucis de deconnection admin : L'administrateur était déconnecté si il voulait voir sa page perso.#}
                             <a class="mr-4" href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
                         {% endif %}
                         <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>

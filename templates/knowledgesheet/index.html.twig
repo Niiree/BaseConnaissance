@@ -10,11 +10,10 @@
         <div class="example-wrapper">
             <h2 class="text-center pt-xl-5 pb-4">Fiche de connaissance</h2>
             <a href="{{ path('knowledgesheet_create') }}">Contribuer</a>
-            <div class="search-bar">{{ form(formSearch)}} </div>{# creation de la barre de recherche#}
+            <div class="search-bar">{{ form(formSearch)}} </div> {# creation de la barre de recherche#}
             <ul class="ulsearch">
                 {% for knowledgesheet in knowledgesheet %}
                     <div class="knowledge shadow-sm p-3 mb-5 bg-white rounded">
-                        {#{{ knowledgesheet.id }} ID de la fiche pour le debug #}
                         <li><h2>{{ knowledgesheet.title }}</h2>
                             <div class="div_button_edit_supp">
                                 <a href="{{ path('edit',{'id':knowledgesheet.id}) }}" class="button_edit_supp">Editer</a>

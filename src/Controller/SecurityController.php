@@ -23,13 +23,9 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // if ($this->getUser()) {
-        //     return $this->redirectToRoute('target_path');
-        // }
-
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
+        // Dernier nom d'utilisateur utilisé
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
@@ -44,8 +40,8 @@ class SecurityController extends AbstractController
     }
 
 
-    // si supérieur à 10min, retourne false
-    // sinon retourne true
+    // si supérieur à 10min, retourne false sinon retourne true
+
     private function isRequestInTime(\Datetime $passwordRequestedAt = null)
     {
         if ($passwordRequestedAt === null) {
@@ -54,7 +50,7 @@ class SecurityController extends AbstractController
 
         $now = new \DateTime();
         $interval = $now->getTimestamp() - $passwordRequestedAt->getTimestamp();
-
+        // Les 10 minutes
         $daySeconds = 60*10;
         $response = $interval > $daySeconds ? false : $reponse = true;
         return $response;

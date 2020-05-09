@@ -98,14 +98,9 @@ class KnowledgesheetController extends AbstractController
             $entityManager->persist($knowledgesheet);
             $entityManager->flush();
             return $this->redirectToRoute('knowledgesheet');
-
         }
-
         return $this ->render('knowledgesheet/edit.html.twig',[
             'formKnowledgesheet' => $form->createView(),
         ]);
-
     }
-
-
 }
