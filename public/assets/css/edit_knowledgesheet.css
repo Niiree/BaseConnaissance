@@ -1,0 +1,10 @@
+.custom {
+    padding: 20px;
+    background-color: rgb(241, 246, 251);
+    border-radius: 15px;
+}
+
+.fas {
+    line-height: 2;
+    font-size: 33px;
+}
