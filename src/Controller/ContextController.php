@@ -26,6 +26,7 @@ class ContextController extends AbstractController
 
     /**
      * @Route("/admin/context", name="context_create")
+     * Zone de création des contextes pour l'administrateur
      */
     public function create(EntityManagerInterface $entityManager, ContextRepository $contextRepository, Request $request)
     {
@@ -50,6 +51,7 @@ class ContextController extends AbstractController
     /**
      * @Route("/user/{id}/edit", name="users_edit", methods={"GET","POST"})
      * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
+     * Récuperation de la liste des contextes
      */
     public function listContext(ContextRepository $contextRepository): Response
     {
@@ -57,13 +59,6 @@ class ContextController extends AbstractController
             'contexts' => $contextRepository->findAll(),
             var_dump($contextRepository),
         ]);
-
-        /*$contexts = $this->getDoctrine()->getRepository('Entity/Context')->findAll();
-        var_dump($contexts);
-        return $this->render('users/edit.html.twig',[
-            'contexts'=>$contexts
-        ]);*/
-
     }
 
 
