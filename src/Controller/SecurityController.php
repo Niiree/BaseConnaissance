@@ -58,6 +58,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/forgotten_password", name="app_forgotten_password")
+     * Page de récupération du mot de passe
      */
     public function forgottenPassword(
         Request $request,
@@ -68,18 +69,17 @@ class SecurityController extends AbstractController
     {
 
         if ($request->isMethod('POST')) {
-
+            //l'adresse e-mail postée est comparée avec celles en bdd
             $email = $request->request->get('email');
-
-
             $entityManager = $this->getDoctrine()->getManager();
             $user = $entityManager->getRepository(Users::class)->findOneByEmail($email);
             /* @var $user Users */
-
+            //si l'adresse est mauvaise, l'utilisateur est redirigé vers l'accueil
             if ($user === null) {
                 $this->addFlash('notice', "Si l'adresse mentionnée est exacte, un mail vous a été envoyé");
                 return $this->redirectToRoute('app_login');
             }
+            //si l'adresse est bonne, un token est généré et associé à l'utilisateur
             $token = $tokenGenerator->generateToken();
             $user->setPasswordRequestedAt(new \Datetime());
 
@@ -91,9 +91,8 @@ class SecurityController extends AbstractController
                 $this->addFlash('warning', $e->getMessage());
                 return $this->redirectToRoute('app_login');
             }
-
             $url = $this->generateUrl('app_reset_password', array('token' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
-
+        //le mail contenant le lien de récupération
             $message = (new \Swift_Message('Mot de passe oublié'))
                 ->setFrom('baseconnaissanceumanit@gmail.com')
                 ->setTo($user->getEmail())
@@ -146,6 +145,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/reset_password/{token}", name="app_reset_password")
+     * Réinitialisation du mot de passe
      */
     public function resetPassword(Request $request, string $token, UserPasswordEncoderInterface $passwordEncoder)
     {
@@ -155,13 +155,13 @@ class SecurityController extends AbstractController
 
             $user = $entityManager->getRepository(Users::class)->findOneByResetToken($token);
             /* @var $user Users */
-
+    //Interdit l'accès si le token est null, ou si le token est différent de celui associé à l'utilisateur, ou si il date de plus de 10 minutes
             if ($user->getResetToken() === null || $token !== $user->getResetToken() || !$this->isRequestInTime($user->getPasswordRequestedAt()))
             {
                 $this->addFlash('notice', 'Token Inconnu ou expiré. Veuillez recommencer');
                     return $this->redirectToRoute('app_login');
             }
-
+    //Réinitialisation du token pour qu'il ne soit plus réutilisable
             $user->setResetToken(null);
             $user->setPasswordRequestedAt(null);
             $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
