@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 {% block title %}Gestion des utilisateurs{% endblock %}
+{#{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}#}
 {% block body %}
-   {% block navbar %} {% include 'navbar.html.twig'%} {% endblock %}
+    {% include 'navbar.html.twig'%}
     <div class="content">
         <div class="row">
             <div class="col-sm-2" id="one">
                 <div class="d-flex custom" id="wrapper">
                     <div class="bg-light border-right" id="sidebar-wrapper">
                         <div class="list-group list-group-flush">
-                            <a href= {{ path('users_index') }} class="list-group-item list-group-item-action bg-light">Utilisateur</a>
+                            <a href= "{{ path('users_index') }}" class="list-group-item list-group-item-action bg-light">Utilisateur</a>
                             <a href="{{ path('context_create') }}" class="list-group-item list-group-item-action bg-light">Contexte</a>
                         </div>
                     </div>
@@ -25,6 +28,7 @@
                 <th scope="col">Identifiant</th>
                 <th scope="col">E-mail</th>
                 <th scope="col">Rôle</th>
+                <th scope="col">Mot de passe</th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
@@ -40,9 +44,13 @@
                         {% elseif (user.roles ? user.roles == ["ROLE_USER"]) %}
                             Utilisateur
                         {%   endif %}</td>
+
+                    <td scope="row">
+                        <a href="{{ path ('app_send_token',{'id' : user.id}) }}">Réinitialiser</a>
+                    </td>
                     <td scope="row">
                         {% if (user.roles ? user.roles == ["ROLE_ADMIN"]) %}
-                        {% else %}{#Rustine pour le soucis de deconnection admin#}
+                        {% else %}{#Rustine pour le soucis de deconnection admin : L'administrateur était déconnecté si il voulait voir sa page perso.#}
                             <a class="mr-4" href="{{ path('users_show', {'id': user.id}) }}">Voir </a>
                         {% endif %}
                         <a href="{{ path('users_edit', {'id': user.id}) }}">Modifier</a>
@@ -56,5 +64,10 @@
             </tbody>
         </table>
         <a href="{{ path('users_new') }}">Créer un nouvel utilisateur</a>
+        {% for message in app.flashes('notice') %}
+            <div class="flash-notice">
+                {{ message }}
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.content {
+    background: url(../image/grid.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    color: #ffffff;
+}
+
+
+.input-group-text {
+    line-height: 0.5;
+}
+.input-group-text a{
+    color: #0069d9;
+}
+a {
+    color: #ffffff;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.content .main {
+    margin: 110px auto;
+    padding: 2rem;
+    background: rgb(2, 70, 87);
+    background: linear-gradient(90deg, rgba(2, 70, 87, 0.6646008745294993) 0%, rgba(9, 9, 121, 0.05955885772277658) 41%, rgba(63, 147, 193, 0.28644961402529767) 100%);
+    border-radius: 10px;
+}
+
+.navbar-brand img {
+    width: 180px;
+    padding: 5px;
+    border: none;
+}
+
+.main .login {
+    border: 2px dotted #255988;
+    padding: 13px;
+    border-radius: 10px;
+}
+
+.main .profile {
+    width: 133px;
+    height: 133px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    border: 2px dotted #ffffff;
+}
+
+.main .texte {
+    margin: 130px auto;
+    justify-content: center;
+}
+
+.main .texte h2 {
+    line-height: 30px;
+}
+
+.main .texte p {
+    font-size: 17px;
+    color: #9299b4;
+}
+
+.main a:last-of-type {
+    text-align-last: left;
+}

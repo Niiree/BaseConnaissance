@@ -1,94 +1,81 @@
 {% extends 'base.html.twig' %}
 {% block title %}Connexion{% endblock %}
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
-    <script crossorigin="anonymous" src="https://kit.fontawesome.com/e90458a561.js"></script>
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/login.css') }}">
 {% endblock %}
-
+{% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
+    <script src="{{ asset('assets/js/show_hide.js') }}"></script>
+{% endblock %}
 {% block body %}
-    {% include 'navbar.html.twig'%}
+    <div class="content">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="#">
+                    <img src="{{ asset('assets/image/logo.svg') }}" alt="">
+                </a>
+            </nav>
+            <div class="main">
+                <div class="row">
 
-    <div class="modal-dialog">
-        <div class="main-section">
-            <div class="modal-content">
-
-                <div class="col-12 user-img" >
-                    <img src="{{ asset('assets/image/user-login.png') }}" alt="user" width="200px" height="200px">
-                </div>
-
-                <div class="col-12 form-input">
-                    <form method="post">
-                        {% if error %}
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                        {% endif %}
-
-                        {% if app.user %}
-                            <div class="mb-3">
-                                Vous êtes connecté en tant que  {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                            </div>
-
-                            {% else %}
-
-                        <div class="form-group">
-                            <label for="inputUsername">Identifiant</label>
-                            <input type="text" class="form-control" value="{{ last_username }}" name="username" id="inputUsername" required autofocus>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inputPassword">Mot de passe</label>
-                            <div class="input-group" id="show_hide_password">
-                            <input  class="form-control" name="password" id="inputPassword" type="password" required>
-                            <a href="" class="bg-light border"><i class="fas fa-eye-slash mt-2" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-
-                        <input type="hidden" class="btn btn-primary" name="_csrf_token"
-                               value="{{ csrf_token('authenticate') }}"> <br>
-
-                        <button type="submit" class="btn btn-primary">
-                            Se connecter
-                        </button>
-                                <div>
-                                    <a  href="{{ path('app_forgotten_password') }}">Mot de passe oublié</a>
-                                </div>
-
-                    </form>
-{#                        <div class="pass">#}
-{#                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Mot de passe oublié</button>#}
-{#                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#                                <div class="modal-dialog" role="document">#}
-{#                                    <div class="modal-content">#}
-{#                                        <div class="modal-header">#}
-{#                                            <h5 class="modal-title" id="exampleModalLabel">Envoi d'un nouveau mot de passe</h5>#}
-{#                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
-{#                                                <span aria-hidden="true">&times;</span>#}
-{#                                            </button>#}
-{#                                        </div>#}
-{#                                        <div class="modal-body">#}
-{#                                            <form>#}
-{#                                                <div class="form-group">#}
-{#                                                    <label for="recipient-e-mail" class="col-form-label">Mon adresse e-mail</label>#}
-{#                                                    <input type="email" class="form-control" id="recipient-e-mail">#}
-{#                                                </div>#}
-{#                                            </form>#}
-{#                                        </div>#}
-{#                                        <div class="modal-footer">#}
-{#                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>#}
-{#                                            <button type="submit" class="btn btn-primary">Envoyer</button>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
+                    <div class="col-md-6 login">
+                        <img src="{{ asset('assets/image/user.png') }}" alt="" class="profile">
+                        <form method="post">
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                             {% endif %}
+                            {% if app.user %}
+                            <div class="mb-3">
+                                Vous êtes connecté en tant que {{ app.user.username }} <a
+                                        href="{{ path('app_logout') }}">Se déconnecter</a>
+                            </div>
+                            {% else %}
+                            <div class="form-group">
+                                <label for="inputUsername">Identifiant</label>
+                                <input type="text" class="form-control" value="{{ last_username }}" name="username"
+                                       id="inputUsername" required autofocus>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inputPassword">Mot de passe</label>
+                                <div class="input-group" id="show_hide_password">
+                                    <input class="form-control" type="password" id="password" name="password" required/>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% for message in app.flashes('notice') %}
+                                <div class="flash-notice">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            <input type="hidden" class="btn btn-primary" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}"> <br>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="md-6">
+                                        <button type="submit" class="btn btn-primary">se connecter</button>
+                                    </div>
+                                    <div class="md-6 ml-auto">
+                                        <a href="{{ path('app_forgotten_password') }}">Mot de passe oublié</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6 hello">
+                        <div class="texte">
+                            <h1 class="text-center">Base de connaissance</h1>
+                            <p class="text-center text-justify">Welcome to our site</p>
                         </div>
-{#                    </form>#}
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
     </div>
-
-    {% block javascripts %}
-        <script src="{{ asset('assets/js/show_hide.js') }}"></script>
-    {% endblock %}
-
 {% endblock %}

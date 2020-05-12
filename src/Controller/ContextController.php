@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\Context;
 use App\Form\ContextType;
 use App\Repository\ContextRepository;
+use App\Repository\UsersRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class ContextController extends AbstractController
 {
@@ -23,6 +26,7 @@ class ContextController extends AbstractController
 
     /**
      * @Route("/admin/context", name="context_create")
+     * Zone de création des contextes pour l'administrateur
      */
     public function create(EntityManagerInterface $entityManager, ContextRepository $contextRepository, Request $request)
     {
@@ -42,12 +46,20 @@ class ContextController extends AbstractController
         return $this ->render('context/create.html.twig',[
             'formContext' => $form->createView(),'contexts' =>$contextRepository->findAll(),
         ]);
-
-
-
-
-
-
-
     }
+
+    /**
+     * @Route("/user/{id}/edit", name="users_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_USER') or is_granted('ROLE_ADMIN')")
+     * Récuperation de la liste des contextes
+     */
+    public function listContext(ContextRepository $contextRepository): Response
+    {
+        return $this->render('users/edit.html.twig', [
+            'contexts' => $contextRepository->findAll(),
+            var_dump($contextRepository),
+        ]);
+    }
+
+
 }

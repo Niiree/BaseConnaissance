@@ -22,7 +22,7 @@ class KnowledgesheetRepository extends ServiceEntityRepository
     }
     public function searchfultexte($search)
     {
-// Requete de recherche full texte
+        // Requete de recherche full texte
         $rsm = new ResultSetMappingBuilder($this->getEntityManager());
         $rsm->addRootEntityFromClassMetadata('App\\Entity\\Knowledgesheet', "p");
         $sql =

@@ -1,3 +1,4 @@
+{#Page d'affichage servant d'édition pour l'utilisateur mais aussi coté administrateur#}
 {% extends 'base.html.twig' %}
 {% block title %}
     {% if (app.user.id != user.id) %}
@@ -7,23 +8,28 @@
     {% endif %}
 {% endblock %}
 {% block body %}
-{% block navbar %}{% include 'navbar.html.twig'%}{% endblock %}
+    {% block navbar %}{% include 'navbar.html.twig'%}{% endblock %}
     <div class="container">
+{#       Si l'utilisateur est administrateur et qu'il modifie un autre compte que le sien#}
         {% if (app.user.id != user.id and is_granted("ROLE_ADMIN")) %}
             <h2 class="text-center pt-xl-5 pb-5">Modification utilisateur</h2>
         {% else %}
+            {#        sinon il sera affiché "mon compte"#}
             <h2 class="text-center pt-xl-5 pb-3">Mon compte</h2>
         {% endif %}
+{#        Si l'utilisateur est autorisé, il aura accès au formulaire#}
         {% if app.user.id == user.id or is_granted("ROLE_ADMIN") %}
             {{ include('users/_form.html.twig', {'button_label': 'Mise à jour'}) }}
         {% else %}
             <h2> Vous n'avez pas accès à ce contenu</h2>
         {% endif %}
+{#        Si l'utilisateur est administrateur, il sera renvoyé sur la page d'administration, sinon il sera renvoyé sur la page d'accueil#}
         {% if (is_granted("ROLE_ADMIN")) %}
             <a href="{{ path('users_index') }}">Revenir à la liste</a>
         {% else %}
             <a href="{{ path('knowledgesheet') }}">Revenir à l'accueil</a>
         {%  endif %}
+{#        Autorise l'administrateur à supprimer un compte, à condition que ce ne soit pas son compte#}
         {% if (app.user.id != user.id and is_granted("ROLE_ADMIN")) %}
             {{ include('users/_delete_form.html.twig') }}
         {%  endif %}
