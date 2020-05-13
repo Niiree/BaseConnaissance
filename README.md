@@ -33,6 +33,24 @@ Symfony console do:mi:mi
 ``
  
 6 - Le projet est prêt à être utilisé sur symfony
+## Base de donnée DEMO 
+
+
+Une base de donnée démo est disponible dans le projet.
+Celle-ci est au format SQL .
+
+`` 
+BDD-Demo.sql
+``
+La base de donnée est fournis avec deux comptes.
+
+
+| Identifiant        |    Mot de passe |   Rôle     |
+| -------------      |: -------------: | ---------: |
+|Administrateur      |        root     |      Administrateur |
+| Utilisateur        |        user     |      Contributeur |
+
+
 
 ## Règle de développement
 ### Les branches
