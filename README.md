@@ -44,12 +44,21 @@ BDD-Demo.sql
 ``
 La base de donnée est fournis avec deux comptes.
 
+Compte Administrateur 
 
-| Identifiant        |    Mot de passe |   Rôle     |
-| -------------      |: -------------: | ---------: |
-|Administrateur      |        root     |      Administrateur |
-| Utilisateur        |        user     |      Contributeur |
+Identifiant  : 
+`Administrateur`
 
+Mot de passe : `root`
+
+-----
+
+Compte Utilisateur 
+
+Identifiant  : 
+`Utilisateur`
+
+Mot de passe : `user`
 
 
 ## Règle de développement
