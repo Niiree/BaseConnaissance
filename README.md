@@ -19,14 +19,14 @@ symfony console ckeditor:install
 symfony console assets:install public
 ```
  
-3 -  Copier le fichier `.env` vers la racine du projet et le renommer en `.en.local`. Le fichier en question servira de configuration entre le projet et votre base de donnée.
+3 -  Copier le fichier `.env` vers la racine du projet et le renommer en `.env.local`. Le fichier en question servira de configuration entre le projet et votre base de donnée.
 
 4 -  Modifier la ligne 
 ```
 DATABASE_URL=postgresql://{nom}:{motdepasse@{adresse de la bdd}/{nomdelabasededonnée}?serverVersion={versionDuServeur}&charset=utf8
 ``` 
 
-5 - Effectuer l'application des migrations sur le terminal ain d'appliquer les changements sur votre base de donnée
+5 - Effectuer l'application des migrations sur le terminal afin d'appliquer les changements sur votre base de donnée
 
 ``
 Symfony console do:mi:mi
