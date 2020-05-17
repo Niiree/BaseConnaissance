@@ -133,9 +133,11 @@ git status
 
 ## Source
 
-* [Tester le projet](http://xxxx) - Lien vers le projet live (en cours)
+* [Tester le projet](https://base-de-connaissance.nicolas-le-stunff.fr/) - Lien vers le projet live
 * [Symfony](https://symfony.com/doc/current/index.html#gsc.tab=0) - Documentation  de symfony
-
-
+* [Ck editor](https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html)
+* [Adobe XD](https://creativecloud.adobe.com/apps/download/xd?promoid=B8NR3RT1&mv=other)
+* [Comment déployer une application Symfony](https://symfony.com/doc/current/deployment.html)
+* [Mailer](https://symfony.com/doc/current/mailer.html)
 
 
