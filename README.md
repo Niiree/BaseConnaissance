@@ -19,7 +19,7 @@ symfony console ckeditor:install
 symfony console assets:install public
 ```
  
-3 -  Copier le fichier `.env` vers la racine du projet et le renommer en `.en.local`. Le fichier en question servira de configuration entre le projet et votre base de donnée.
+3 -  Copier le fichier `.env` vers la racine du projet et le renommer en `.env.local`. Le fichier en question servira de configuration entre le projet et votre base de donnée.
 
 4 -  Modifier la ligne 
 ```
