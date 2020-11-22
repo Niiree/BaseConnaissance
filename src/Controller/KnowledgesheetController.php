@@ -33,12 +33,10 @@ class KnowledgesheetController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $knowledgesheet = $knowledgesheetRepository->searchfultexte($data['search_bar']);
-        }
+/*        }
         else{
-            $data['search'] = '1';
+            $data['search'] = '1';*/
         }
-
-
         return $this->render('knowledgesheet/index.html.twig', [
             'knowledgesheet' => $knowledgesheet,
             'knowledgesheet/searchKnow.html.twig',

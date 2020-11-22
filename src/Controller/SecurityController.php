@@ -82,7 +82,6 @@ class SecurityController extends AbstractController
             //si l'adresse est bonne, un token est généré et associé à l'utilisateur
             $token = $tokenGenerator->generateToken();
             $user->setPasswordRequestedAt(new \Datetime());
-
             try {
                 $user->setResetToken($token);
                 $entityManager->persist($user);
@@ -100,11 +99,8 @@ class SecurityController extends AbstractController
                     "Bonjour " . $user->getUsername() . ", voici le lien pour créer un nouveau mot de passe : " . $url,
                     'text/html'
                 );
-
             $mailer->send($message);
-
             $this->addFlash('notice', "Si l'adresse mentionnée est exacte, un mail vous a été envoyé");
-
             return $this->redirectToRoute('app_login');
         }
 
